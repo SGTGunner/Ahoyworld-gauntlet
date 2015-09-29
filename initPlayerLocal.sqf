@@ -18,8 +18,7 @@ if (!hasInterface) then {
 if (hasInterface) then {
     [] call AW_fnc_diary;		         	// Diary
     execVM "scripts\misc\QS_icons.sqf";		// Icons
-    Sleep 0.001;                            // Skip the check for maps on briefing
-    [] call AW_fnc_loadoutsExec;            // Apply loadouts
+    [AW_fnc_loadoutsExec,[]] call ace_common_fnc_execNextFrame;       // Apply loadouts
 
     // ACE3 interactions
     [true,"rhsusf_M1083A1P2_B_M2_d_MHQ_fmtv_usarmy"] call AW_fnc_FOB_interactions_add; // ACE3 interactions for the FOB
