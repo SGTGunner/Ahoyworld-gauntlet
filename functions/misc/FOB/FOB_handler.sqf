@@ -120,7 +120,7 @@ if (!isNil "_deployed" && {local _vehicle}) then {
         MHQ_box addMagazineCargoGlobal ["rhs_mag_30Rnd_556x45_Mk262_Stanag", 40];
         MHQ_box addMagazineCargoGlobal ["rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red", 40];
         //---------------------------- Fin Hint for user+Grid broadcast(Use EH to broadcast hint)
-        _gridPos = (getpos _vehicle) call ace_common_fnc_getMapGridFromPos;
+        _gridPos = [(getpos _vehicle),true]call ace_common_fnc_getMapGridFromPos;
         _fobHintText = format [
                                                      "<t align='center' size='2.2'>FOB Deployed at </t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/><br/><br/>",_gridPos
                                                                   ];
