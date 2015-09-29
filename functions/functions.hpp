@@ -65,6 +65,5 @@ class KC {
 		file = "functions";
 		class missionName {};
 		class reinforceChopper {};
-		class setFuel {};
 	};
 };
