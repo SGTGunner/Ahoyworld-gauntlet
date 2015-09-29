@@ -1,0 +1,80 @@
+//-------------------------On Load
+
+author = PFC.Christiansen and BACONMOP;					// Visible when loading mission
+onLoadName = "Gauntlet";								// Visible when loading mission
+OnLoadMission = " ... Join us on TeamSpeak at ts.ahoyworld.co.uk:9987";
+loadScreen = "media\Gauntlet.jpg";
+overviewPicture = "media\Gauntlet.jpg";
+
+
+onLoadIntro = "";										// Displays a message while the intro is loading.
+onLoadIntroTime = 0;									// Time and date displayed while the intro loads. 1 visible, 0 hidden.
+onLoadMissionTime = 0;									// Time and date displayed while the mission loads. 1 visible, 0 hidden.
+
+class Header {
+	gameType = COOP;								// Unknown, COOP, DM, TDM, CTF, SC, CTI, RPG, Sandbox, Seize, Defend.
+	minPlayers = 1;									// Min # of players the MISSION supports
+	maxPlayers = 71;								// Max # of players the MISSION supports, not server slots. Make sure # is greater than server slots.
+};
+//-------------------------Misc
+
+disableChannels[] = {0,1,2,5,6};						// 0 = Global, 1 = Side, 2 = Command, 3 = Group, 4 = Vehicle, 5 = Direct, 6 = System. Admin/server/BattlEye can still use Global.
+disabledAI = 1;											// No AI in playable units
+aiKills = 0; 											// disable scorelist for AI players
+enableItemsDropping = 0; 								// disabled with 0
+joinUnassigned = 1;										// 0 = players forced into role on join
+
+//-------------------------RespawnStuff
+
+respawn = 3;
+respawnDelay = 60;
+respawnTemplates[] = {"ace_spectator"};
+respawnTemplatesWest[] = {"ace_spectator","Counter"};
+
+//-------------------------Functions
+
+class CfgFunctions
+{
+		#include "functions\functions.hpp"
+};
+
+//---------------------------Mission Parameters
+
+class Params {
+	//params 0
+	class Daytime {
+		title = $STR_a3_cfgvehicles_moduledate_f_arguments_hour_0;
+		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
+		texts[] = {"00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"};
+		default = 5;
+		function = "AW_fnc_daytime";
+	};
+	//params 1
+	class Gamenight {
+		title = "Gamenight Event?";
+		texts[] = {"No","Yes"};
+		values[] = {0,1};
+		default = 0;
+	};
+	//params 2
+	class VehicleRespawnDistance {
+		title = "Distance from players that vehicles won't respawn";
+		values[] = {10,50,100,200,300,400,500,1000,2000,5000,10000};
+		texts[] = {"10m","50m","100m","200m","300m","400m","500m","1km","2km","5km","10km"};
+		default = 1000;
+	};
+	//params 3
+	class AmbientHeliWPs {
+		title = "Amount of Waypoints for Ambient Helicopters";
+		values[] = { 5,10,15,20,25,30 };
+		texts[] ={ "5","10","15","20","25","30"};
+		default = 15;
+	};
+	//params 4
+	class MissionAmount {
+		title = "Amount of AOs before mission ends";
+		values[] = { 1,2,3,4,5,6,7,8,9,10 };
+		texts[] ={ "1","2","3","4","5","6","7","8","9","10"};
+		default = 4;
+	};
+};
