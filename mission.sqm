@@ -3773,7 +3773,7 @@ class Mission
 			vehicle="Land_Cargo20_military_green_F";
 			skill=0.60000002;
 			text="ammoCargo";
-			init="this enableSimulation false;this allowDamage false;this setVariable [""ACE_cargo_size"",-1];this setVariable [""ACE_cargo_hasCargo"",false];";
+			init="this enableSimulation false;this allowDamage false;this setVariable [""ACE_cargo_size"",-1];this setVariable [""ACE_cargo_space"",0];";
 		};
 		class Item11
 		{
