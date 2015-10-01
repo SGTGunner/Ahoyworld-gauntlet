@@ -76,7 +76,7 @@ _misHintText = format
 //------------------- PFH checking every 10s if the mission has been completed
 _TriggerPFH = {
 	if ((!isNil "missionWin") && {missionWin}) then {
-		(_this select 0) params ["_missionCounter","_missionName"];
+		(_this select 0) params ["_missionCounter","_missionName","_marker","_marker2","_marker3"];
 
 		_misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -90,6 +90,9 @@ _TriggerPFH = {
 		missionFail = nil;
 		missionWin = nil;
 		truck = nil;
+		_marker = nil;
+		_marker2 = nil;
+		_marker3 = nil;
 
 		["m2"] call DAC_fDeleteZone;
 
@@ -101,7 +104,7 @@ _TriggerPFH = {
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 	if ((!isNil "missionFail") && {missionFail}) then {
-		(_this select 0) params ["_missionCounter","_missionName"];
+		(_this select 0) params ["_missionCounter","_missionName","_marker","_marker2","_marker3"];
 
 		_misFAILText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misFAILText]] call ace_common_fnc_globalEvent;
@@ -114,6 +117,9 @@ _TriggerPFH = {
 		missionFail = nil;
 		missionWin = nil;
 		truck = nil;
+		_marker = nil;
+		_marker2 = nil;
+		_marker3 = nil;
 
 		["m2"] call DAC_fDeleteZone;
 

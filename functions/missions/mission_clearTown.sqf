@@ -73,6 +73,9 @@ _TriggerPFH = {
 		deleteMarker "mission1_1_mrk";
 		deleteVehicle _winTrigger;
 		missionFinish = nil;
+		_marker = nil;
+		_marker2 = nil;
+		_marker3 = nil;
 
 		["m1"] call DAC_fDeleteZone;
 		_nextMission = {
