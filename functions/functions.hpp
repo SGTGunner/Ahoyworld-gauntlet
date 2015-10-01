@@ -1,7 +1,14 @@
 class AW {
     tag = "AW";
     class functions {
-        //loadouts
+        //Main
+        class missionName {file = "functions\core\missionName.sqf";};
+        class missionSelection {file = "functions\core\missionSelection.sqf";};
+
+        //Missions
+        class mission1 {file = "functions\missions\mission1.sqf";};
+
+        //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};
         class Load_B_officer {file = "functions\loadouts\1.Platoon_Leader.sqf";};
         class Load_B_SL {file = "functions\loadouts\2.SquadLeader.sqf";};
@@ -39,7 +46,7 @@ class AW {
         class FOB_CanDeploy {file ="functions\misc\FOB\FOB_CanDeploy.sqf";};
         class FOB_CanRepack {file ="functions\misc\FOB\FOB_CanRepack.sqf";};
 
-        // misc
+        //Misc
         class VA_filter {file = "functions\misc\VA_filter.sqf";};
         class daytime {file = "functions\misc\daytime.sqf";};
         class Globalhint_handler {file = "functions\misc\Globalhint_handler.sqf";};
@@ -63,7 +70,6 @@ class KC {
 	tag= "KC";
 	class functions {
 		file = "functions";
-		class missionName {};
 		class reinforceChopper {};
 	};
 };
