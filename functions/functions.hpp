@@ -6,7 +6,8 @@ class AW {
         class missionSelection {file = "functions\core\missionSelection.sqf";};
 
         //Missions
-        class mission1 {file = "functions\missions\mission1.sqf";};
+        class mission_clearTown {file = "functions\missions\mission_clearTown.sqf";};
+        class mission_ressuplyTruck {file = "functions\missions\mission_ressuplyTruck.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};
