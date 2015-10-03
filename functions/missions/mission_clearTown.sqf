@@ -49,7 +49,7 @@ _winTriggerWait = {
 	_winTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
 	_winTrigger setTriggerArea [500,500,0,false];
 	_winTrigger setTriggerActivation ["EAST","NOT PRESENT",false];
-	_winTrigger setTriggerStatements ["this","missionFinish = true;",""];
+	_winTrigger setTriggerStatements ["this","missionWin = true;",""];
 };
 [_winTriggerWait, [_selectedLocation], 60] call ace_common_fnc_waitAndExecute;
 
@@ -63,8 +63,8 @@ _misHintText = format
 
 //------------------- PFH checking every 10s if the mission has been completed
 _TriggerPFH = {
-	if ((!isNil "missionFinish") && {missionFinish}) then {
-		(_this select 0) params ["_missionCounter","_missionName"];
+	if ((!isNil "missionWin") && {missionWin}) then {
+		(_this select 0) params ["_missionCounter","_missionName","_marker","_marker2","_marker3"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
@@ -72,7 +72,7 @@ _TriggerPFH = {
 		deleteMarker "mission1_mrk";
 		deleteMarker "mission1_1_mrk";
 		deleteVehicle _winTrigger;
-		missionFinish = nil;
+		missionWin = nil;
 		_marker = nil;
 		_marker2 = nil;
 		_marker3 = nil;

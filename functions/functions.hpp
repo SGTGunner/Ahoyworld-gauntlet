@@ -8,6 +8,7 @@ class AW {
         //Missions
         class mission_clearTown {file = "functions\missions\mission_clearTown.sqf";};
         class mission_ressuplyTruck {file = "functions\missions\mission_ressuplyTruck.sqf";};
+        class mission_AAVehicleDeal {file = "functions\missions\mission_AAVehicleDeal.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};
