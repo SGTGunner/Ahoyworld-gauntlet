@@ -17,7 +17,7 @@ _ins_truck = getMarkerPos "mission_3_truck_1";
 _ins_car = getMarkerPos "mission_3_car_1";
 _opf_car = getMarkerPos "mission_3_car_2";
 _opf_truck= getMarkerPos "mission_3_truck_2";
-_obj = getMarkerPos "mission_3_aa";
+_selectedLocation = getMarkerPos "mission_3_aa";
 
 //------------------- Mission name
 _missionName = [] call AW_fnc_missionName;
@@ -30,7 +30,7 @@ _ins_truck_spwn = createVehicle ["y_truck_small", _ins_truck, [], 0, "NONE" ];
 _opf_car_spwn = createVehicle ["rhs_tigr_vdv", _opf_car, [], 0, "NONE" ];
 _opf_truck_spwn = createVehicle ["rhs_typhoon_vdv", _opf_truck, [], 0, "NONE" ];
 
-objective = createVehicle ["rhs_zsu234_aa", _obj, [], 0, "NONE" ];
+mission3objective = createVehicle ["rhs_zsu234_aa", _selectedLocation, [], 0, "NONE" ];
 
 _ins_car_spwn setVehicleLock "LOCKED";
 _ins_truck_spwn setVehicleLock "LOCKED";
@@ -43,24 +43,24 @@ _ins_truck_spwn setDir 205;
 _opf_car_spwn setDir 25;
 _opf_truck_spwn setDir 25;
 
-objective setDir 290;
+mission3Objective setDir 290;
 
 //Spawn In Enemies (2 zones as heavy defence @ objective and ambient around AF)
 
 _DACvalues = ["m3_1",[3,0,0],[5,4,20,5],[],[3,2,20,5],[],[0,0,0,0]];
-[_obj,600,600,0,0,_DACvalues] call DAC_fNewZone;
+[_selectedLocation,600,600,0,0,_DACvalues] call DAC_fNewZone;
 
 _DACvalues = ["m3_2",[3,0,0],[5,3,20,5],[],[],[3,2,20,5],[0,0,0,0]];
-[_obj,250,250,0,0,_DACvalues] call DAC_fNewZone;
+[_selectedLocation,250,250,0,0,_DACvalues] call DAC_fNewZone;
 
 //------------------- Markers AO
-_marker = createMarker ["mission3_mrk", _obj];
+_marker = createMarker ["mission3_mrk", _selectedLocation];
 "mission3_mrk" setMarkerShape "ICON";
 "mission3_mrk" setMarkerType "selector_selectable";
 "mission3_mrk" setMarkerColor "ColorBLUFOR";
 "mission3_mrk" setMarkerText "Objective";
 
-_marker2 = createMarker ["mission3_1_mrk", _obj];
+_marker2 = createMarker ["mission3_1_mrk", _selectedLocation];
 "mission3_1_mrk" setMarkerShape "ELLIPSE";
 "mission3_1_mrk" setMarkerSize [400,400];
 "mission3_1_mrk" setMarkerBrush "Border";
@@ -73,12 +73,11 @@ _marker3 = createMarker ["mission3_2_mrk", getMarkerPos "AOMarker"];
 
 //------------------- win trigger
 _winTriggerWait = {
-	(_this select 0) params ["_obj"];
 	_winTrigger = createTrigger ["EmptyDetector",getMarkerPos "mission_3_aa",false];
 	_winTrigger setTriggerArea [20,20,20,false];
-	_winTrigger setTriggerStatements ["!alive objective","missionWin = true;",""];
+	_winTrigger setTriggerStatements ["!alive mission3Objective","missionWin = true;",""];
 };
-[_winTriggerWait, [_obj], 60] call ace_common_fnc_waitAndExecute;
+[_winTriggerWait, [], 60] call ace_common_fnc_waitAndExecute;
 
 
 //------------------- Mission hint
@@ -92,42 +91,41 @@ _misHintText = format
 //------------------- Mission objective PFH
 _missionPFH = {
 	if ((!isNil "missionWin") && {missionWin}) then {
-		(_this select 0) params ["_missionCounter","_missionName","_marker","_marker2","_marker3"];
+		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with halting the trade. %1 was a success</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+
 		deleteMarker "mission3_mrk";
 		deleteMarker "mission3_1_mrk";
 		deleteMarker "mission3_2_mrk";
+
 		_marker = nil;
 		_marker2 = nil;
 		_marker3 = nil;
+
 		deleteVehicle _ins_car_spwn;
 		deleteVehicle _ins_truck_spwn;
 		deleteVehicle _opf_car_spwn;
 		deleteVehicle _opf_truck_spwn;
-		deleteVehicle _objective;
+		deleteVehicle mission3Objective;
+
 		_ins_truck = nil;
 		_ins_car = nil;
 		_opf_car = nil;
 		_opf_truck = nil;
-		_obj = nil;
 		_ins_car_spwn = nil;
 		_ins_truck_spwn = nil;
 		_opf_car_spwn = nil;
 		_opf_truck_spwn = nil;
-		objective = nil;
+		mission3Objective = nil;
 		missionWin = nil;
 
 		["m3_1"] call DAC_fDeleteZone;
 		["m3_2"] call DAC_fDeleteZone;
 
-		_nextMission = {
-			(_this select 0) params ["_missionCounter"];
-			[(_missionCounter+1)] call AW_fnc_missionSelection;
-		};
-		[_nextMission, [_missionCounter], 60] call ace_common_fnc_waitAndExecute;
+		[(_missionCounter+1),"mission_3_aa"] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_missionPFH,10,[_missionCounter,_missionName]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

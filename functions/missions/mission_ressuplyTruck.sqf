@@ -27,7 +27,7 @@ _DACvalues = ["m2",[2,0,0],[4,2,20,5],[],[1,2,20,5],[],[0,0,0,0]];
 
 //------------------- Spawn Truck in
 _spawnLoc = getMarkerPos "spawn_zone";
-truck = createVehicle ["RHS_Ural_Civ_03", _spawnLoc, [], 0, "NONE" ];
+mission2Objective = createVehicle ["RHS_Ural_Civ_03", _spawnLoc, [], 0, "NONE" ];
 
 //------------------- Markers AO
 _marker = createMarker ["mission2_mrk", getMarkerPos _selectedLocation ];
@@ -52,7 +52,7 @@ _winTriggerWait = {
 	(_this select 0) params ["_selectedLocation"];
 	_winTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
 	_winTrigger setTriggerArea [20,20,20,false];
-	_winTrigger setTriggerStatements ["truck distance thistrigger < 10","missionWin = true;",""];
+	_winTrigger setTriggerStatements ["mission2Objective distance thistrigger < 10","missionWin = true;",""];
 };
 [_winTriggerWait, [_selectedLocation], 60] call ace_common_fnc_waitAndExecute;
 
@@ -61,7 +61,7 @@ _failTriggerWait = {
 	(_this select 0) params ["_selectedLocation"];
 	_failTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
 	_failTrigger setTriggerArea [20,20,20,false];
-	_failTrigger setTriggerStatements ["!alive truck","missionFail = true;",""];
+	_failTrigger setTriggerStatements ["!alive mission2Objective","missionFail = true;",""];
 };
 [_failTriggerWait, [_selectedLocation], 60] call ace_common_fnc_waitAndExecute;
 
@@ -76,7 +76,7 @@ _misHintText = format
 //------------------- PFH checking every 10s if the mission has been completed
 _TriggerPFH = {
 	if ((!isNil "missionWin") && {missionWin}) then {
-		(_this select 0) params ["_missionCounter","_missionName","_marker","_marker2","_marker3"];
+		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -87,24 +87,22 @@ _TriggerPFH = {
 		deleteMarker "mission2_1_mrk";
 		deleteMarker "mission2_2_mrk";
 		deleteVehicle truck;
+
 		missionFail = nil;
 		missionWin = nil;
-		truck = nil;
+		mission2Objective = nil;
+
 		_marker = nil;
 		_marker2 = nil;
 		_marker3 = nil;
 
 		["m2"] call DAC_fDeleteZone;
 
-		_nextMission = {
-			(_this select 0) params ["_missionCounter"];
-			[(_missionCounter+1)] call AW_fnc_missionSelection;
-		};
-		[_nextMission, [_missionCounter], 60] call ace_common_fnc_waitAndExecute;
+		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 	if ((!isNil "missionFail") && {missionFail}) then {
-		(_this select 0) params ["_missionCounter","_missionName","_marker","_marker2","_marker3"];
+		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misFAILText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misFAILText]] call ace_common_fnc_globalEvent;
@@ -114,21 +112,19 @@ _TriggerPFH = {
 		deleteMarker "mission2_mrk";
 		deleteMarker "mission2_1_mrk";
 		deleteMarker "mission2_2_mrk";
+
 		missionFail = nil;
 		missionWin = nil;
-		truck = nil;
+		mission2Objective = nil;
+
 		_marker = nil;
 		_marker2 = nil;
 		_marker3 = nil;
 
 		["m2"] call DAC_fDeleteZone;
 
-		_nextMission = {
-			(_this select 0) params ["_missionCounter"];
-			[(_missionCounter+1)] call AW_fnc_missionSelection;
-		};
-		[_nextMission, [_missionCounter], 60] call ace_common_fnc_waitAndExecute;
+		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_TriggerPFH,10,[_missionCounter,_missionName]] call CBA_fnc_addPerFrameHandler;
+[_TriggerPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
