@@ -15,6 +15,7 @@ class AW {
         class mission_KillHVT {file = "functions\missions\mission_KillHVT.sqf";};
         class mission_deployComs {file = "functions\missions\mission_deployComs.sqf";};
         class mission_destroyComs {file = "functions\missions\mission_destroyComs.sqf";};
+        class mission_recoverCrate {file = "functions\missions\mission_recoverCrate.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};

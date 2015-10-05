@@ -115,7 +115,7 @@ _TriggerPFH = {
 		_marker2 = nil;
 		_marker3 = nil;
 
-		["m6"] call DAC_fDeleteZone;
+		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
@@ -146,7 +146,7 @@ _TriggerPFH = {
 		_marker2 = nil;
 		_marker3 = nil;
 
-		["m6"] call DAC_fDeleteZone;
+		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
