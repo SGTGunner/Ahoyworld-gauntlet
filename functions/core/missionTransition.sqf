@@ -11,8 +11,6 @@
  */
 params ["_missionCounter","_previousLocation"];
 
-diag_log format ["missionTransition %1",_previousLocation];
-
 _bluforCheck = createTrigger ["EmptyDetector",getMarkerPos _previousLocation,false];
 _bluforCheck setTriggerArea [400,400,0,false];
 _bluforCheck setTriggerActivation ["WEST","NOT PRESENT",false];
