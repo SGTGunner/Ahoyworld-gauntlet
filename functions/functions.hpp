@@ -13,6 +13,8 @@ class AW {
         class mission_AAVehicleDeal {file = "functions\missions\mission_AAVehicleDeal.sqf";};
         class mission_destroyRadar {file = "functions\missions\mission_destroyRadar.sqf";};
         class mission_KillHVT {file = "functions\missions\mission_KillHVT.sqf";};
+        class mission_deployComs {file = "functions\missions\mission_deployComs.sqf";};
+        class mission_destroyComs {file = "functions\missions\mission_destroyComs.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};

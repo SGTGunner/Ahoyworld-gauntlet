@@ -26,10 +26,12 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     AW_fnc_mission_ressuplyTruck,
     AW_fnc_mission_AAVehicleDeal,
     AW_fnc_mission_destroyRadar,
-    AW_fnc_mission_KillHVT
+    AW_fnc_mission_KillHVT,
+    AW_fnc_mission_deployComs,
+    AW_fnc_mission_destroyComs
     ];
 };
-diag_log format ["missionSelection start %1",_missionCounter];
+
 //------------------- Check if the mission amount has been reached.
 if (("MissionAmount" call BIS_fnc_getParamValue) == _missionCounter) then {
     [] spawn BIS_fnc_EndMission;
