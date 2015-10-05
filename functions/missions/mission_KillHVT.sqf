@@ -103,7 +103,6 @@ _TriggerPFH = {
 		deleteMarker "HVT_mrk";
 		deleteMarker "HVT_mrk_1";
 		deleteMarker "HVT_2_mrk";
-		["m11"] call DAC_fDeleteZone;
 		deleteGroup _hvtGrp;
 
 		_marker = nil;
@@ -125,6 +124,7 @@ _TriggerPFH = {
 		QRFTarget = nil;
 		_meetingLocation = nil;
 
+		[{["m11"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};

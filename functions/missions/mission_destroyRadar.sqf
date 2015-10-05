@@ -78,7 +78,7 @@ _TriggerPFH = {
 		deleteVehicle _winTrigger;
 		deleteVehicle _obj_2;
 		deleteVehicle _obj_3;
-
+		
 		missionWin = nil;
 		_marker = nil;
 		_marker2 = nil;
@@ -87,7 +87,7 @@ _TriggerPFH = {
 		_obj_2 = nil;
 		_obj_3 = nil;
 
-		["m4"] call DAC_fDeleteZone;
+		[{["m4"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

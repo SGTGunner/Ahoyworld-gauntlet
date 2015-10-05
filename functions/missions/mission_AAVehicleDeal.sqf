@@ -121,8 +121,8 @@ _missionPFH = {
 		mission3Objective = nil;
 		missionWin = nil;
 
-		["m3_1"] call DAC_fDeleteZone;
-		["m3_2"] call DAC_fDeleteZone;
+		[{["m3_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m3_2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),"mission_3_aa"] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
