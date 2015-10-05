@@ -4,11 +4,15 @@ class AW {
         //Main
         class missionName {file = "functions\core\missionName.sqf";};
         class missionSelection {file = "functions\core\missionSelection.sqf";};
+        class missionTransition {file = "functions\core\missionTransition.sqf";};
+        class respawnTime_EH {file = "functions\core\respawnTime_EH.sqf";};
 
         //Missions
         class mission_clearTown {file = "functions\missions\mission_clearTown.sqf";};
         class mission_ressuplyTruck {file = "functions\missions\mission_ressuplyTruck.sqf";};
         class mission_AAVehicleDeal {file = "functions\missions\mission_AAVehicleDeal.sqf";};
+        class mission_destroyRadar {file = "functions\missions\mission_destroyRadar.sqf";};
+        class mission_KillHVT {file = "functions\missions\mission_KillHVT.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};
