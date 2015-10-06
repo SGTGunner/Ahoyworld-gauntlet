@@ -58,10 +58,10 @@ _marker3 = createMarker ["HVT_2_mrk", getMarkerPos "AOMarker"];
 
 //------------------- Triggers
 QRFTarget = getMarkerPos _selectedLocation;
-_QRFTrigger = createTrigger ["EmptyDetector",QRFTarget];
-_QRFTrigger setTriggerArea [400,400,0,false];
-_QRFTrigger setTriggerActivation ["West","East D", false];
-_QRFTrigger setTriggerStatements ["this","GRP1 = [rndPos, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
+nextPhaseTrigger = createTrigger ["EmptyDetector",QRFTarget];
+nextPhaseTrigger setTriggerArea [400,400,0,false];
+nextPhaseTrigger setTriggerActivation ["West","East D", false];
+nextPhaseTrigger setTriggerStatements ["this","GRP1 = [rndPos, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
 [GRP1,QRFTarget] call BIS_fnc_taskAttack;
 GRP2 = [rndPos2, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
 [GRP2,QRFTarget] call BIS_fnc_taskAttack;
@@ -97,6 +97,7 @@ _missionPFH = {
 		deleteMarker "HVT_mrk";
 		deleteMarker "HVT_mrk_1";
 		deleteMarker "HVT_2_mrk";
+		deleteVehicle nextPhaseTrigger;
 
 		mission14Objective = nil;
 		QRFCalled = nil;
@@ -109,6 +110,7 @@ _missionPFH = {
 		GRP3 = nil;
 		ambientHeli = nil;
 		QRFTarget = nil;
+		nextPhaseTrigger = nil;
 
 		[{["m11"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;

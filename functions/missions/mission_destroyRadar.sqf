@@ -65,8 +65,8 @@ _missionPFH = {
 		_missionClearing = {
 			deleteVehicle _obj_2;
 			deleteVehicle _obj_3;
-			deleteMarker mission4Objective;
-			mission4Objective; = nil;
+			deleteVehicle mission4Objective;
+			mission4Objective = nil;
 		};
 		[_missionClearing,[], 60] call ace_common_fnc_waitAndExecute;
 

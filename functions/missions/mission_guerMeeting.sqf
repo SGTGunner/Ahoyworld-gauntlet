@@ -56,9 +56,9 @@ if (isNil "s3") then {
 	"mission10_2_mrk" setMarkerText "A local guerrilla leader has requested a meeting with command. Meet with him and make sure he and the Platoon commander can complete the meeting.";
 
 	//------------------- Triggers
-	_nextPhaseTrigger = createTrigger ["EmptyDetector",_meetingLocation,false];
-	_nextPhaseTrigger setTriggerArea [30,30,0,false];
-	_nextPhaseTrigger setTriggerStatements ["s3 distance mission10Objective < 20","missionNextPhase = true;",""];
+	nextPhaseTrigger = createTrigger ["EmptyDetector",_meetingLocation,false];
+	nextPhaseTrigger setTriggerArea [30,30,0,false];
+	nextPhaseTrigger setTriggerStatements ["s3 distance mission10Objective < 20","missionNextPhase = true;",""];
 
 	//------------------- Mission hint
 	_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with command. Meet with him and make sure he and the Platoon commander can complete the meeting.<br/><br/>",_missionName];
@@ -86,7 +86,7 @@ if (isNil "s3") then {
 	_missionPFH = {
 		if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
 			if (isNil "meetingTime") then {
-				meetingTime = 0
+				meetingTime = 0;
 			} else {
 				meetingTime = meetingTime + 10;
 			};
@@ -148,7 +148,8 @@ if (isNil "s3") then {
 			if (!isNil "m10_1") then {
 				[{["m10_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 			} else {
-				deletevehicle _nextPhaseTrigger;
+				deletevehicle nextPhaseTrigger;
+				nextPhaseTrigger = nil;
 			};
 
 			[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;

@@ -48,9 +48,9 @@ _marker3 = createMarker ["mission8_2_mrk", getMarkerPos "AOMarker"];
 "mission8_2_mrk" setMarkerText "A helicopter dropped its slingload of experimental weapons while under fire, secure the cache before OPFOR manage to salvage it. The crate needs to be brought back to the dropoff zone.";
 
 //------------------- Triggers
-_winTrigger = createTrigger ["EmptyDetector",_dropZone];
-_winTrigger setTriggerArea [20,20,20,false];
-_winTrigger setTriggerStatements ["mission8Objective distance thistrigger < 10","missionWin = true;",""];
+winTrigger = createTrigger ["EmptyDetector",_dropZone];
+winTrigger setTriggerArea [20,20,20,false];
+winTrigger setTriggerStatements ["mission8Objective distance thistrigger < 10","missionWin = true;",""];
 
 //------------------- Mission hint
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A helicopter dropped its slingload of experimental weapons while under fire, secure the cache before OPFOR manages to salvage it! The crate needs to be brought back to the Dropoff zone <br/><br/>",_missionName];
@@ -86,10 +86,12 @@ _missionPFH = {
         deleteMarker "mission8_mrk";
 		deleteMarker "mission8_1";
 		deleteMarker "mission8_2_mrk";
+		deleteVehicle winTrigger;
 
         mission8Objective = nil;
 		missionWin = nil;
-
+		winTrigger = nil;
+		
 		[{["m8"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;

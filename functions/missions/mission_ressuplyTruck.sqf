@@ -48,9 +48,9 @@ _marker3 = createMarker ["mission2_2_mrk", getMarkerPos "AOMarker"];
 "mission2_2_mrk" setMarkerText "A point needs resupplying, bring the truck from the pickup point to the designated area.";
 
 //------------------- win trigger
-_winTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-_winTrigger setTriggerArea [20,20,20,false];
-_winTrigger setTriggerStatements ["mission2Objective distance thistrigger < 10","missionWin = true;",""];
+winTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
+winTrigger setTriggerArea [20,20,20,false];
+winTrigger setTriggerStatements ["mission2Objective distance thistrigger < 10","missionWin = true;",""];
 
 //------------------- Mission hint
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A point needs resupplying,bring the truck from the pickup-point to the designated area<br/><br/>",_missionName];
@@ -85,7 +85,9 @@ _missionPFH = {
 		deleteMarker "mission2_mrk";
 		deleteMarker "mission2_1_mrk";
 		deleteMarker "mission2_2_mrk";
+		deleteVehicle winTrigger;
 
+		winTrigger = nil;
 		missionWin = nil;
 		[{mission2Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
 

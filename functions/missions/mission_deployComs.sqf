@@ -48,10 +48,10 @@ _marker3 = createMarker ["mission6_2_mrk", getMarkerPos "AOMarker"];
 "mission6_2_mrk" setMarkerText "A communications array needs to be deployed, you will find the crate in the pickup zone. Enemy presence should be clear out before deploying com-array.";
 
 //------------------- Triggers
-_nextPhaseTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-_nextPhaseTrigger setTriggerArea [50,50,50,false];
-_nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
-_nextPhaseTrigger setTriggerStatements ["this && mission6Objective distance thistrigger < 15","missionNextPhase = true;",""];
+nextPhaseTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
+nextPhaseTrigger setTriggerArea [50,50,50,false];
+nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
+nextPhaseTrigger setTriggerStatements ["this && mission6Objective distance thistrigger < 15","missionNextPhase = true;",""];
 
 //------------------- Mission Hint
 _misHintText = format["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A Communications array needs to be deployed, you will find the crate in the Pickup zone.Enemy presence should be cleared out before deploying com-array. Expect heavy resistance to you deploying the array at the designated area. Good Luck!<br/><br/>",_missionName];
@@ -63,19 +63,20 @@ _reinforcementsPFH = {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_rndPos = [_selectedLocation, 1500] call CBA_fnc_randPos;
+		GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP1,(getMarkerPos _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+		_rndPos = [_selectedLocation, 1500] call CBA_fnc_randPos;
+		GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP2,(getMarkerPos _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
-
-		_GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+		_rndPos = [_selectedLocation, 1500] call CBA_fnc_randPos;
+		GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP3,(getMarkerPos _selectedLocation)] call BIS_fnc_taskAttack;
 
 		_nextPhaseTrigger2 = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
 		_nextPhaseTrigger2 setTriggerArea [800,800,800,false];
-		_nextPhaseTrigger2 setTriggerStatements ["(count (units _GRP1) < 4) && (count (units _GRP2) < 4) && (count (units _GRP3) < 4)","missionWin = true;",""];
+		_nextPhaseTrigger2 setTriggerStatements ["(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4)","missionWin = true;",""];
 
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
@@ -94,10 +95,15 @@ _missionPFH = {
 		deleteMarker "mission6_1_mrk";
 		deleteMarker "mission6_2_mrk";
 		deleteVehicle mission6Objective;
+		deleteVehicle nextPhaseTrigger;
 
 		missionNextPhase = nil;
 		missionWin = nil;
 		mission6Objective = nil;
+		nextPhaseTrigger = nil;
+		GRP1 = nil;
+		GRP2 = nil;
+		GRP3 = nil;
 
 		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
@@ -118,6 +124,9 @@ _missionPFH = {
 		missionNextPhase = nil;
 		missionWin = nil;
 		mission6Objective = nil;
+		GRP1 = nil;
+		GRP2 = nil;
+		GRP3 = nil;
 
 		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
