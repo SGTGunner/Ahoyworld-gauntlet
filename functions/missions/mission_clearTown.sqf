@@ -52,15 +52,11 @@ _winTriggerWait = {
 [_winTriggerWait, [_selectedLocation], 60] call ace_common_fnc_waitAndExecute;
 
 //------------------- Mission hint
-_misHintText = format
-	[
-		"<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A town has been occupied, you need to clear it out! Good Luck<br/><br/>",
-		_missionName
-	];
+_misHintText = format["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A town has been occupied, you need to clear it out! Good Luck<br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
 //------------------- PFH checking every 10s if the mission has been completed
-_TriggerPFH = {
+_missionPFH = {
 	if ((!isNil "missionWin") && {missionWin}) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
@@ -70,11 +66,7 @@ _TriggerPFH = {
 		deleteMarker "mission1_mrk";
 		deleteMarker "mission1_1_mrk";
 		deleteMarker "mission1_2_mrk";
-		deleteVehicle _winTrigger;
 		missionWin = nil;
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
 
 		[{["m1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
@@ -82,4 +74,4 @@ _TriggerPFH = {
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_TriggerPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

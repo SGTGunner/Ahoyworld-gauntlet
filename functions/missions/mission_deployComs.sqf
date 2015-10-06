@@ -48,48 +48,43 @@ _marker3 = createMarker ["mission6_2_mrk", getMarkerPos "AOMarker"];
 "mission6_2_mrk" setMarkerText "A communications array needs to be deployed, you will find the crate in the pickup zone. Enemy presence should be clear out before deploying com-array.";
 
 //------------------- Triggers
-_transitionTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-_transitionTrigger setTriggerArea [50,50,50,false];
-_transitionTrigger setTriggerActivation ["WEST","PRESENT",false];
-_transitionTrigger setTriggerStatements ["this && mission6Objective distance thistrigger < 15","missionTransition = true;",""];
-
-_failTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-_failTrigger setTriggerArea [50,50,50,false];
-_failTrigger setTriggerStatements ["!alive mission6Objective","missionFail = true;",""];
+_nextPhaseTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
+_nextPhaseTrigger setTriggerArea [50,50,50,false];
+_nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
+_nextPhaseTrigger setTriggerStatements ["this && mission6Objective distance thistrigger < 15","missionNextPhase = true;",""];
 
 //------------------- Mission Hint
-_misHintText = format
-	[
-		"<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A Communications array needs to be deployed, you will find the crate in the Pickup zone.Enemy presence should be cleared out before deploying com-array. Expect heavy resistance to you deploying the array at the designated area. Good Luck!<br/><br/>",
-		_missionName
-	];
+_misHintText = format["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A Communications array needs to be deployed, you will find the crate in the Pickup zone.Enemy presence should be cleared out before deploying com-array. Expect heavy resistance to you deploying the array at the designated area. Good Luck!<br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
 //------------------- PFH checking every 10s if the box is in the right place to call reinforcements
 _reinforcementsPFH = {
-	if ((!isNil "missionTransition") && {missionTransition}) then {
+	if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_rndPos = [_selectedLocation, 1500] call CBA_fnc_randPos;
 
 		_GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
 		[_GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+
 		_GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
 		[_GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+
 		_GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
 		[_GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
 
-		_transitionTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-		_transitionTrigger setTriggerArea [800,800,800,false];
-		_transitionTrigger setTriggerStatements ["(count (units _GRP1) < 4) && (count (units _GRP2) < 4) && (count (units _GRP3) < 4)","missionWin = true;",""];
+		_nextPhaseTrigger2 = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
+		_nextPhaseTrigger2 setTriggerArea [800,800,800,false];
+		_nextPhaseTrigger2 setTriggerStatements ["(count (units _GRP1) < 4) && (count (units _GRP2) < 4) && (count (units _GRP3) < 4)","missionWin = true;",""];
+
+		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
 [_reinforcementsPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
 //------------------- PFH checking every 10s if the mission has been completed
-_TriggerPFH = {
-	if ((!isNil "missionFail") && {missionFail}) then {
+_missionPFH = {
+	if (!alive mission6Objective) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misFailText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>The crate was destroyed, too bad, wait on further tasking</t>",_missionName];
@@ -98,22 +93,11 @@ _TriggerPFH = {
 		deleteMarker "mission6_mrk";
 		deleteMarker "mission6_1_mrk";
 		deleteMarker "mission6_2_mrk";
-		deleteVehicle _winTrigger;
-		deleteVehicle _failTrigger;
 		deleteVehicle mission6Objective;
 
-		missionTransition = nil;
+		missionNextPhase = nil;
 		missionWin = nil;
-		missionFail = nil;
 		mission6Objective = nil;
-		_transitionTrigger = nil;
-		_rndPos = nil;
-		_GRP1 = nil;
-		_GRP2 = nil;
-		_GRP3 = nil;
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
 
 		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
@@ -129,22 +113,11 @@ _TriggerPFH = {
 		deleteMarker "mission6_mrk";
 		deleteMarker "mission6_1_mrk";
 		deleteMarker "mission6_2_mrk";
-		deleteVehicle _winTrigger;
-		deleteVehicle _failTrigger;
 		deleteVehicle mission6Objective;
 
-		missionTransition = nil;
+		missionNextPhase = nil;
 		missionWin = nil;
-		missionFail = nil;
 		mission6Objective = nil;
-		_transitionTrigger = nil;
-		_rndPos = nil;
-		_GRP1 = nil;
-		_GRP2 = nil;
-		_GRP3 = nil;
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
 
 		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
@@ -152,4 +125,4 @@ _TriggerPFH = {
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_TriggerPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

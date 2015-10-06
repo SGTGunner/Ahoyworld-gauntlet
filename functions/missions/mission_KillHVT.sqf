@@ -56,7 +56,6 @@ _marker3 = createMarker ["HVT_2_mrk", getMarkerPos "AOMarker"];
 "HVT_2_mrk" setMarkerType "mil_dot";
 "HVT_2_mrk" setMarkerText "An Enemy officer has been spotted. Take Him Out.";
 
-
 //------------------- Triggers
 QRFTarget = getMarkerPos _selectedLocation;
 _QRFTrigger = createTrigger ["EmptyDetector",QRFTarget];
@@ -71,47 +70,35 @@ GRP3 = [rndPos1, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv'
 ambientHeli = createVehicle ['RHS_Mi8AMTSh_UPK23_vvsc', rndPos3, [], 0, 'FLY' ];
 [ambientHeli,_heliGrp] call BIS_fnc_spawnCrew; [heliGrp,QRFTarget] call BIS_fnc_taskAttack;QRFCalled = true;",""];
 
-_winTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-_winTrigger setTriggerArea [500,500,0,false];
-_winTrigger setTriggerActivation ["EAST","NOT PRESENT",false];
-_winTrigger setTriggerStatements ["!alive mission14Objective","missionWin = true;",""];
-
 //------------------- Mission hint
-_misHintText = format
-	[
-		"<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>An enemy Officer has been spotted. Kill him but be aware. If the enemy find you they will call in their QRF.<br/><br/>",
-		_missionName
-	];
+_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>An enemy Officer has been spotted. Kill him but be aware. If the enemy find you they will call in their QRF.<br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
-//------------------- PFH checking every 10s if the mission has been completed
-_TriggerPFH = {
-	if (QRFCalled) then {
+//------------------- PFHs
+_qrfPFH = {
+	if ((!isNil "QRFCalled") && {QRFCalled}) then {
 		(_this select 0) params ["","_missionName",""];
 
 		_misEndText = format ["<t align='center' size='2.2'>Attention</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>The enemy QRF has been alerted. Hurry up with the mission.</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+
+		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
-	if (missionWin) then {
+};
+[_qrfPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+
+_missionPFH = {
+	if (!alive mission14Objective) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1. Now get out of the area and new tasking will be assigned</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteVehicle _QRFTrigger;
-		deleteVehicle _winTrigger;
 		deleteMarker "HVT_mrk";
 		deleteMarker "HVT_mrk_1";
 		deleteMarker "HVT_2_mrk";
-		deleteGroup _hvtGrp;
 
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
-		_hvtGrp = nil;
-		_winTrigger = nil;
 		mission14Objective = nil;
-		missionWin = nil;
 		QRFCalled = nil;
 		rndPos = nil;
 		rndPos1 = nil;
@@ -122,11 +109,10 @@ _TriggerPFH = {
 		GRP3 = nil;
 		ambientHeli = nil;
 		QRFTarget = nil;
-		_meetingLocation = nil;
 
 		[{["m11"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_TriggerPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

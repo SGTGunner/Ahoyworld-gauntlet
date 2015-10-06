@@ -52,20 +52,12 @@ _winTrigger = createTrigger ["EmptyDetector",_dropZone];
 _winTrigger setTriggerArea [20,20,20,false];
 _winTrigger setTriggerStatements ["mission8Objective distance thistrigger < 10","missionWin = true;",""];
 
-_failTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation];
-_failTrigger setTriggerArea [20,20,20,false];
-_failTrigger setTriggerStatements ["!alive mission8Objective","missionFail = true;",""];
-
 //------------------- Mission hint
-_misHintText = format
-   [
-       "<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A helicopter dropped its slingload of experimental weapons while under fire, secure the cache before OPFOR manages to salvage it! The crate needs to be brought back to the Dropoff zone <br/><br/>",
-       _missionName
-   ];
+_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A helicopter dropped its slingload of experimental weapons while under fire, secure the cache before OPFOR manages to salvage it! The crate needs to be brought back to the Dropoff zone <br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
 //------------------- PFH
-_TriggerPFH = {
+_missionPFH = {
 	if ((!isNil "missionWin") && {missionWin}) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
@@ -75,23 +67,17 @@ _TriggerPFH = {
 		deleteMarker "mission8_mrk";
 		deleteMarker "mission8_1";
 		deleteMarker "mission8_2_mrk";
-		deleteVehicle _winTrigger;
-        deleteVehicle _failTrigger;
         deleteVehicle mission8Objective;
 
         mission8Objective = nil;
 		missionWin = nil;
-        missionFail = nil;
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
 
 		[{["m8"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
-    if ((!isNil "missionFail") && {missionFail}) then {
+    if (!alive mission8Objective) then {
         (_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
         _misFAILText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1, get ready for new tasking</t>",_missionName];
@@ -100,15 +86,9 @@ _TriggerPFH = {
         deleteMarker "mission8_mrk";
 		deleteMarker "mission8_1";
 		deleteMarker "mission8_2_mrk";
-		deleteVehicle _winTrigger;
-        deleteVehicle _failTrigger;
 
         mission8Objective = nil;
 		missionWin = nil;
-        missionFail = nil;
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
 
 		[{["m8"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
@@ -116,4 +96,4 @@ _TriggerPFH = {
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
     };
 };
-[_TriggerPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

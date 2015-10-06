@@ -46,10 +46,6 @@ _nextPhaseTrigger setTriggerArea [400,400,0,false];
 _nextPhaseTrigger setTriggerActivation ["WEST","PRESENT", false];
 _nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
 
-_winTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation];
-_winTrigger setTriggerArea [20,20,20,false];
-_winTrigger setTriggerStatements ["!alive mission9Objective","missionWin = true;",""];
-
 //------------------- Mission Hint
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A UAV has crashlanded, destroy it before the enemies can retrieve it. <br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
@@ -79,8 +75,8 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 };
 [_missionNextPhasePFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
-_missionWinPFH = {
-    if ((!isNil "missionWin") && {missionWin}) then {
+_missionPFH = {
+    if (!alive mission9Objective) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
         _misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
@@ -92,15 +88,12 @@ _missionWinPFH = {
         deleteMarker "mission9_1_mrk";
         deleteMarker "mission9_2_mrk";
 
-        mission9Objective = nil;
-        missionWin = nil;
-	    missionNextPhase = nil;
-        _marker = nil;
-        _marker2 = nil;
-        _marker3 = nil;
+        missionNextPhase = nil;
+
+        [{mission9Objective = nil;}, [], 120] call ace_common_fnc_waitAndExecute;
 
         [(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
     	[_this select 1] call CBA_fnc_removePerFrameHandler;
     };
 };
-[_missionWinPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

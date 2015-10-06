@@ -13,8 +13,7 @@
 params ["_missionCounter"];
 
 if (isNil "s3") then {
-	_misHintText = format
-	["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with command, we currently don't have any mission aborted.<br/><br/>",_missionName];
+	_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with the platoon commander, we currently don't have any mission aborted.<br/><br/>",_missionName];
 	["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 	[(_missionCounter+1)] call AW_fnc_missionSelection;
 } else {
@@ -57,13 +56,12 @@ if (isNil "s3") then {
 	"mission10_2_mrk" setMarkerText "A local guerrilla leader has requested a meeting with command. Meet with him and make sure he and the Platoon commander can complete the meeting.";
 
 	//------------------- Triggers
-	nextPhaseTrigger = createTrigger ["EmptyDetector",_meetingLocation,false];
-	nextPhaseTrigger setTriggerArea [30,30,0,false];
-	nextPhaseTrigger setTriggerStatements ["s3 distance mission10Objective < 20","missionNextPhase = true;",""];
+	_nextPhaseTrigger = createTrigger ["EmptyDetector",_meetingLocation,false];
+	_nextPhaseTrigger setTriggerArea [30,30,0,false];
+	_nextPhaseTrigger setTriggerStatements ["s3 distance mission10Objective < 20","missionNextPhase = true;",""];
 
 	//------------------- Mission hint
-	_misHintText = format
-	["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with command. Meet with him and make sure he and the Platoon commander can complete the meeting.<br/><br/>",_missionName];
+	_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with command. Meet with him and make sure he and the Platoon commander can complete the meeting.<br/><br/>",_missionName];
 	["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
 	//------------------- PFHs
@@ -91,13 +89,17 @@ if (isNil "s3") then {
 				meetingTime = 0
 			} else {
 				meetingTime = meetingTime + 10;
-			};	
+			};
 		};
-		if ((!isNil "meetingTime") && {meetingTime >= 60}) then {
+		if ((!isNil "meetingTime") && {meetingTime >= 600}) then {
 			(_this select 0) params ["_missionCounter","_missionName","_selectedLocation","_mission10_PFH_1","_mission10_PFH_2"];
 
 			_misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, The meeting is complete</t>",_missionName];
 			["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
+
+
+
+			_gurGrp = createGroup west;
 
 			_gurLeaveWP = [_selectedLocation, 2000] call CBA_fnc_randPos;
 			[mission10Objective, mission10ObjectiveGuard] joinSilent _gurGrp;
@@ -107,21 +109,15 @@ if (isNil "s3") then {
 			_Convoy_WP1 setWaypointBehaviour "SAFE";
 			_Convoy_WP1 setWaypointFormation "Column";
 
-			[{mission10Objective = nil;mission10ObjectiveGuard = nil;},[], 60] call ace_common_fnc_waitAndExecute;
+			[{mission10Objective = nil;mission10ObjectiveGuard = nil;},[], 120] call ace_common_fnc_waitAndExecute;
 
 			deleteMarker "mission10_mrk";
 			deleteMarker "mission10_1_mrk";
 			deleteMarker "mission10_2_mrk";
-			deletevehicle failTrigger;
-			deletevehicle nextPhaseTrigger;
 
-			missionWin = nil;
-			missionFail = nil;
 			missionNextPhase = nil;
 			mission10Objective = nil;
 			mission10ObjectiveGuard = nil;
-			failTrigger = nil;
-			nextPhaseTrigger = nil;
 			meetingTime = nil;
 
 			[{["m10"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
@@ -141,18 +137,20 @@ if (isNil "s3") then {
 			deleteMarker "mission10_mrk";
 			deleteMarker "mission10_1_mrk";
 			deleteMarker "mission10_2_mrk";
-			deletevehicle nextPhaseTrigger;
 
-			missionWin = nil;
+
 			missionNextPhase = nil;
 			mission10Objective = nil;
 			mission10ObjectiveGuard = nil;
-			nextPhaseTrigger = nil;
+			meetingTime = nil;
 
 			[{["m10"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 			if (!isNil "m10_1") then {
 				[{["m10_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+			} else {
+				deletevehicle _nextPhaseTrigger;
 			};
+
 			[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 
 			_mission10_PFH_1 call CBA_fnc_removePerFrameHandler;

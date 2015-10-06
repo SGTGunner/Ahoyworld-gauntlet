@@ -23,12 +23,10 @@ _selectedLocation = getMarkerPos "mission_3_aa";
 _missionName = [] call AW_fnc_missionName;
 
 //------------------- Spawn ambiant vics+lock and objective
-
-_ins_car_spwn = createVehicle ["y_technical_a", _ins_car, [], 0, "NONE" ];
-_ins_truck_spwn = createVehicle ["y_truck_small", _ins_truck, [], 0, "NONE" ];
-
-_opf_car_spwn = createVehicle ["rhs_tigr_vdv", _opf_car, [], 0, "NONE" ];
-_opf_truck_spwn = createVehicle ["rhs_typhoon_vdv", _opf_truck, [], 0, "NONE" ];
+local _ins_car_spwn = createVehicle ["y_technical_a", _ins_car, [], 0, "NONE" ];
+local _ins_truck_spwn = createVehicle ["y_truck_small", _ins_truck, [], 0, "NONE" ];
+local _opf_car_spwn = createVehicle ["rhs_tigr_vdv", _opf_car, [], 0, "NONE" ];
+local _opf_truck_spwn = createVehicle ["rhs_typhoon_vdv", _opf_truck, [], 0, "NONE" ];
 
 mission3objective = createVehicle ["rhs_zsu234_aa", _selectedLocation, [], 0, "NONE" ];
 
@@ -45,8 +43,7 @@ _opf_truck_spwn setDir 25;
 
 mission3Objective setDir 290;
 
-//Spawn In Enemies (2 zones as heavy defence @ objective and ambient around AF)
-
+//------------------- Spawn In Enemies (2 zones as heavy defence @ objective and ambient around AF)
 _DACvalues = ["m3_1",[3,0,0],[5,4,20,5],[],[3,2,20,5],[],[0,0,0,0]];
 [_selectedLocation,600,600,0,0,_DACvalues] call DAC_fNewZone;
 
@@ -71,26 +68,13 @@ _marker3 = createMarker ["mission3_2_mrk", getMarkerPos "AOMarker"];
 "mission3_2_mrk" setMarkerType "mil_dot";
 "mission3_2_mrk" setMarkerText "A deal is going down between the OPFOR and Insurgents, the Insurgents are trying to aquire a AA-vehicle,stop the trade and clear out any enemies and blow up the AA-vehicle.";
 
-//------------------- win trigger
-_winTriggerWait = {
-	_winTrigger = createTrigger ["EmptyDetector",getMarkerPos "mission_3_aa",false];
-	_winTrigger setTriggerArea [20,20,20,false];
-	_winTrigger setTriggerStatements ["!alive mission3Objective","missionWin = true;",""];
-};
-[_winTriggerWait, [], 60] call ace_common_fnc_waitAndExecute;
-
-
 //------------------- Mission hint
-_misHintText = format
-	[
-		"<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A deal is going down between the OPFOR and Insurgents, the Insurgents are trying to aquire a AA-vehicle,stop the trade and clear out any enemies and blow up the AA-vehicle. Good Luck!<br/><br/>",
-		_missionName
-	];
+_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A deal is going down between the OPFOR and Insurgents, the Insurgents are trying to aquire a AA-vehicle,stop the trade and clear out any enemies and blow up the AA-vehicle. Good Luck!<br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
 //------------------- Mission objective PFH
 _missionPFH = {
-	if ((!isNil "missionWin") && {missionWin}) then {
+	if (!alive mission3objective) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with halting the trade. %1 was a success</t>",_missionName];
@@ -100,26 +84,16 @@ _missionPFH = {
 		deleteMarker "mission3_1_mrk";
 		deleteMarker "mission3_2_mrk";
 
-		_marker = nil;
-		_marker2 = nil;
-		_marker3 = nil;
+		_missionClearing = {
+			deleteVehicle _ins_car_spwn;
+			deleteVehicle _ins_truck_spwn;
+			deleteVehicle _opf_car_spwn;
+			deleteVehicle _opf_truck_spwn;
+			deleteVehicle mission3Objective;
 
-		deleteVehicle _ins_car_spwn;
-		deleteVehicle _ins_truck_spwn;
-		deleteVehicle _opf_car_spwn;
-		deleteVehicle _opf_truck_spwn;
-		deleteVehicle mission3Objective;
-
-		_ins_truck = nil;
-		_ins_car = nil;
-		_opf_car = nil;
-		_opf_truck = nil;
-		_ins_car_spwn = nil;
-		_ins_truck_spwn = nil;
-		_opf_car_spwn = nil;
-		_opf_truck_spwn = nil;
-		mission3Objective = nil;
-		missionWin = nil;
+			mission3Objective = nil;
+		};
+		[_missionClearing,[], 60] call ace_common_fnc_waitAndExecute;
 
 		[{["m3_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 		[{["m3_2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
