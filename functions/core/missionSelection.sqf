@@ -1,6 +1,6 @@
 /*
  * Author: alganthe
- * Handle the mission selection, this should only be called on server init or in a mission end PFH
+ * Handle the mission selection, this should only be called on server init or after missionTransition
  *
  * Arguments:
  * 0: amount of missions played <NUMBER>
@@ -28,7 +28,9 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     AW_fnc_mission_KillHVT,
     AW_fnc_mission_deployComs,
     AW_fnc_mission_destroyComs,
-    AW_fnc_mission_recoverCrate
+    AW_fnc_mission_recoverCrate,
+    AW_fnc_mission_destroyUAV,
+    AW_fnc_mission_guerMeeting
     ];
 };
 //------------------- Check if the mission amount has been reached.
