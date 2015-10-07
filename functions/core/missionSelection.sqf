@@ -30,7 +30,8 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     AW_fnc_mission_destroyComs,
     AW_fnc_mission_recoverCrate,
     AW_fnc_mission_destroyUAV,
-    AW_fnc_mission_guerMeeting
+    AW_fnc_mission_guerMeeting,
+    AW_fnc_mission_tankPlatoon
     ];
 };
 //------------------- Check if the mission amount has been reached.
