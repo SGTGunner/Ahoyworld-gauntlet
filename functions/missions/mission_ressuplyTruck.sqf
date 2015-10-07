@@ -69,7 +69,7 @@ _missionPFH = {
 		deleteMarker "mission2_2_mrk";
 
 		missionWin = nil;
-		[{mission2Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{deleteVehicle mission2Objective;mission2Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 

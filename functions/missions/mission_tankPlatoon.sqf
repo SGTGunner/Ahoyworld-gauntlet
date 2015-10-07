@@ -10,9 +10,7 @@
 |	Last modified: By:
 |	Made for AhoyWorld.
 */
-
-
-//Defines+locations+missioncall
+params ["_missionCounter"];
 
 _missionLocations = ["NukeIns","NukeIns_1","NukeIns_2","NukeIns_3","NukeIns_4","NukeIns_5","NukeIns_6","NukeIns_7","NukeIns_8","NukeIns_9","NukeIns_10","NukeIns_11","NukeIns_12","NukeIns_13","NukeIns_14","NukeIns_15","NukeIns_16","NukeIns_17","NukeIns_18","NukeIns_19","NukeIns_20","NukeIns_21","NukeIns_22","NukeIns_23","NukeIns_24"];
 //------------------- Get Random Mission Loc
