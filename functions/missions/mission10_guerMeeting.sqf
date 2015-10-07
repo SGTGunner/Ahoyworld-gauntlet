@@ -120,8 +120,8 @@ if (isNil "s3") then {
 			mission10ObjectiveGuard = nil;
 			meetingTime = nil;
 
-			[{["m10"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
-			[{["m10_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+			[{["m10"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+			[{["m10_1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 			[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 
@@ -144,9 +144,9 @@ if (isNil "s3") then {
 			mission10ObjectiveGuard = nil;
 			meetingTime = nil;
 
-			[{["m10"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+			[{["m10"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 			if (!isNil "m10_1") then {
-				[{["m10_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+				[{["m10_1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 			} else {
 				deletevehicle nextPhaseTrigger;
 				nextPhaseTrigger = nil;

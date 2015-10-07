@@ -72,7 +72,7 @@ _missionPFH = {
         mission8Objective = nil;
 		missionWin = nil;
 
-		[{["m8"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m8"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
@@ -91,8 +91,8 @@ _missionPFH = {
         mission8Objective = nil;
 		missionWin = nil;
 		winTrigger = nil;
-		
-		[{["m8"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+
+		[{["m8"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

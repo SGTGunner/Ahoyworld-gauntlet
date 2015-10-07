@@ -64,7 +64,7 @@ _missionPFH = {
 
 		[{deleteVehicle mission7Objective;mission7Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m7"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m7"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1)] call AW_fnc_missionSelection;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

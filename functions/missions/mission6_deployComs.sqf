@@ -78,6 +78,7 @@ _reinforcementsPFH = {
 		_nextPhaseTrigger2 setTriggerArea [800,800,800,false];
 		_nextPhaseTrigger2 setTriggerStatements ["(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4)","missionWin = true;",""];
 
+		missionNextPhase = nil;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
@@ -105,7 +106,7 @@ _missionPFH = {
 		GRP2 = nil;
 		GRP3 = nil;
 
-		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m6"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
@@ -121,14 +122,14 @@ _missionPFH = {
 		deleteMarker "mission6_2_mrk";
 		deleteVehicle mission6Objective;
 
-		missionNextPhase = nil;
+
 		missionWin = nil;
 		mission6Objective = nil;
 		GRP1 = nil;
 		GRP2 = nil;
 		GRP3 = nil;
 
-		[{["m6"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m6"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

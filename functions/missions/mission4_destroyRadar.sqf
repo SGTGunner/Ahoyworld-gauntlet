@@ -70,7 +70,7 @@ _missionPFH = {
 		};
 		[_missionClearing,[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m4"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m4"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

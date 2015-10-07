@@ -28,7 +28,7 @@ local _ins_truck_spwn = createVehicle ["y_truck_small", _ins_truck, [], 0, "NONE
 local _opf_car_spwn = createVehicle ["rhs_tigr_vdv", _opf_car, [], 0, "NONE" ];
 local _opf_truck_spwn = createVehicle ["rhs_typhoon_vdv", _opf_truck, [], 0, "NONE" ];
 
-mission3objective = createVehicle ["rhs_zsu234_aa", _selectedLocation, [], 0, "NONE" ];
+mission3Objective = createVehicle ["rhs_zsu234_aa", _selectedLocation, [], 0, "NONE" ];
 
 _ins_car_spwn setVehicleLock "LOCKED";
 _ins_truck_spwn setVehicleLock "LOCKED";
@@ -74,7 +74,7 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 //------------------- Mission objective PFH
 _missionPFH = {
-	if (!alive mission3objective) then {
+	if (!alive mission3Objective) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with halting the trade. %1 was a success</t>",_missionName];
@@ -95,8 +95,8 @@ _missionPFH = {
 		};
 		[_missionClearing,[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m3_1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
-		[{["m3_2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m3_1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+		[{["m3_2"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),"mission_3_aa"] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

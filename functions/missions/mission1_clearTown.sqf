@@ -68,7 +68,7 @@ _missionPFH = {
 		deleteMarker "mission1_2_mrk";
 		missionWin = nil;
 
-		[{["m1"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;

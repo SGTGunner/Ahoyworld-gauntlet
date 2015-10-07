@@ -90,7 +90,7 @@ _missionPFH = {
 
         missionNextPhase = nil;
 
-        [{mission9Objective = nil;}, [], 120] call ace_common_fnc_waitAndExecute;
+        [{mission9Objective = nil;}, [], 60] call ace_common_fnc_waitAndExecute;
 
         [(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
     	[_this select 1] call CBA_fnc_removePerFrameHandler;

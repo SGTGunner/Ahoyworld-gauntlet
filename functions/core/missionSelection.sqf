@@ -21,7 +21,7 @@ if (GAMENIGHT == 1) then {
 if ((!isNil "_firstCall") && {_firstCall}) Then {
     funcs =
     [
-    AW_fnc_mission_clearTown,
+    /*AW_fnc_mission_clearTown,
     AW_fnc_mission_ressuplyTruck,
     AW_fnc_mission_AAVehicleDeal,
     AW_fnc_mission_destroyRadar,
@@ -33,7 +33,8 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     AW_fnc_mission_guerMeeting,
     AW_fnc_mission_tankPlatoon,
     AW_fnc_mission_captureNuclearDevice,
-    AW_fnc_mission_destroyMortar
+    AW_fnc_mission_destroyMortar,*/
+    AW_fnc_mission_captureAndDefendTown
     ];
 };
 //------------------- Check if the mission amount has been reached.

@@ -30,22 +30,22 @@ _DACvalues = ["m14",[4,0,0],[4,4,20,5],[],[3,4,20,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;
 
 //------------------- Markers
-_marker = createMarker ["destroyMortar_mrk", getMarkerPos _selectedLocation ];
-"destroyMortar_mrk" setMarkerShape "ICON";
-"destroyMortar_mrk" setMarkerType "selector_selectable";
-"destroyMortar_mrk" setMarkerColor "ColorBLUFOR";
-"destroyMortar_mrk" setMarkerText "Objective";
+_marker = createMarker ["mission14_mrk", getMarkerPos _selectedLocation ];
+"mission14_mrk" setMarkerShape "ICON";
+"mission14_mrk" setMarkerType "selector_selectable";
+"mission14_mrk" setMarkerColor "ColorBLUFOR";
+"mission14_mrk" setMarkerText "Objective";
 
-_marker2 = createMarker ["destroyMortar_1_mrk", getMarkerPos _selectedLocation];
-"destroyMortar_1_mrk" setMarkerShape "ELLIPSE";
-"destroyMortar_1_mrk" setMarkerSize [400,400];
-"destroyMortar_1_mrk" setMarkerBrush "Border";
+_marker2 = createMarker ["mission14_1_mrk", getMarkerPos _selectedLocation];
+"mission14_1_mrk" setMarkerShape "ELLIPSE";
+"mission14_1_mrk" setMarkerSize [400,400];
+"mission14_1_mrk" setMarkerBrush "Border";
 "mission4_1_mrk" setMarkerColor "ColorOPFOR";
 
-_marker3 = createMarker ["destroyMortar_2_mrk", getMarkerPos "AOMarker"];
-"destroyMortar_2_mrk" setMarkerShape "ICON";
-"destroyMortar_2_mrk" setMarkerType "mil_dot";
-"destroyMortar_2_mrk" setMarkerText "OPFOR has set up a Mortar emplacement. Destroy it ASAP to allow our forces to push up.";
+_marker3 = createMarker ["mission14_2_mrk", getMarkerPos "AOMarker"];
+"mission14_2_mrk" setMarkerShape "ICON";
+"mission14_2_mrk" setMarkerType "mil_dot";
+"mission14_2_mrk" setMarkerText "OPFOR has set up a Mortar emplacement. Destroy it ASAP to allow our forces to push up.";
 
 //------------------- Mission hint
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>OPFOR has set up a Mortar emplacement. Destroy it ASAP to allow our forces to push up. <br/><br/>",_missionName];
@@ -59,13 +59,13 @@ _missionPFH = {
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "destroyMortar_mrk";
-		deleteMarker "destroyMortar_1_mrk";
-		deleteMarker "destroyMortar_2_mrk";
+		deleteMarker "mission14_mrk";
+		deleteMarker "mission14_1_mrk";
+		deleteMarker "mission14_2_mrk";
 
 		[{deleteVehicle mission14Objective;mission14Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m14"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{["m14"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
 		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
