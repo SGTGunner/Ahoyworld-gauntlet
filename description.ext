@@ -16,8 +16,8 @@ class Header {
 	minPlayers = 1;									// Min # of players the MISSION supports
 	maxPlayers = 71;								// Max # of players the MISSION supports, not server slots. Make sure # is greater than server slots.
 };
-//-------------------------Misc
 
+//-------------------------Misc
 disableChannels[] = {0,1,2,5,6};						// 0 = Global, 1 = Side, 2 = Command, 3 = Group, 4 = Vehicle, 5 = Direct, 6 = System. Admin/server/BattlEye can still use Global.
 disabledAI = 1;											// No AI in playable units
 aiKills = 0; 											// disable scorelist for AI players
@@ -32,14 +32,11 @@ respawnTemplates[] = {"ace_spectator"};
 respawnTemplatesWest[] = {"ace_spectator","Counter"};
 
 //-------------------------Functions
-
-class CfgFunctions
-{
+class CfgFunctions {
 		#include "functions\functions.hpp"
 };
 
 //---------------------------Mission Parameters
-
 class Params {
 	//params 0
 	class Daytime {
@@ -79,7 +76,7 @@ class Params {
 	};
 };
 
-
+//--------------------------- ACE3 settings
 class ACE_Settings {
 	class ace_spectator_filterUnits {
 	    value = 2;
