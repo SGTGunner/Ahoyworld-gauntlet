@@ -22,6 +22,7 @@ class AW {
         class mission_captureAndDefendTown {file = "functions\missions\mission13_captureAndDefendTown.sqf";};
         class mission_destroyMortar {file = "functions\missions\mission14_destroyMortar.sqf";};
         class mission_KillHVT {file = "functions\missions\mission15_KillHVT.sqf";};
+        class mission_recoverChopperIntel {file = "functions\missions\mission16_recoverChopperIntel.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};

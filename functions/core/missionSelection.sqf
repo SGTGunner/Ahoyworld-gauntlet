@@ -33,8 +33,9 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     AW_fnc_mission_guerMeeting,
     AW_fnc_mission_tankPlatoon,
     AW_fnc_mission_captureNuclearDevice,
-    AW_fnc_mission_destroyMortar,*/
-    AW_fnc_mission_captureAndDefendTown
+    AW_fnc_mission_destroyMortar,
+    AW_fnc_mission_captureAndDefendTown,*/
+    AW_fnc_mission_recoverChopperIntel
     ];
 };
 //------------------- Check if the mission amount has been reached.
