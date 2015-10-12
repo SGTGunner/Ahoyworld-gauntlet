@@ -66,24 +66,22 @@ _missionPFH = {
 		missionNextPhase = nil;
 
 		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		_GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+		GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
 		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		_GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+		GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
 		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		_GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+		GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
 		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		_GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[_GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
-
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
+		GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+		[GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 	};
-	if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4)}) then {
+	if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4) && (count (units GRP4) < 4)}) then {
 		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
