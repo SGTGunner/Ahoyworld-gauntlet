@@ -47,27 +47,34 @@ class Params {
 		function = "AW_fnc_daytime";
 	};
 	//params 1
-	class Gamenight {
-		title = "Gamenight Event?";
-		texts[] = {"No","Yes"};
+	class MakeVAAvailable {
+		title = "Make VA available?";
+		texts[] = {"Yes","No"};
 		values[] = {0,1};
 		default = 0;
 	};
 	//params 2
+	class EnableRespawn {
+		title = "Enable respawn?";
+		texts[] = {"Yes","No"};
+		values[] = {0,1};
+		default = 0;
+	};
+	//params 3
 	class VehicleRespawnDistance {
 		title = "Distance from players that vehicles won't respawn";
 		values[] = {10,50,100,200,300,400,500,1000,2000,5000,10000};
 		texts[] = {"10m","50m","100m","200m","300m","400m","500m","1km","2km","5km","10km"};
 		default = 1000;
 	};
-	//params 3
+	//params 4
 	class AmbientHeliWPs {
 		title = "Amount of Waypoints for Ambient Helicopters";
 		values[] = { 5,10,15,20,25,30 };
 		texts[] ={ "5","10","15","20","25","30"};
 		default = 15;
 	};
-	//params 4
+	//params 5
 	class MissionAmount {
 		title = "Amount of AOs before mission ends";
 		values[] = { 1,2,3,4,5,6,7,8,9,10 };

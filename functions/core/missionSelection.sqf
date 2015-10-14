@@ -12,7 +12,7 @@
 params ["_missionCounter","_firstCall"];
 private ["_nextMission"];
 
-if (GAMENIGHT == 1) then {
+if (("EnableRespawn" call BIS_fnc_getParamValue) == 1) then {
     ["Respawn_EH", [0]] call ace_common_fnc_syncedEvent;
     _respawnWait = {["Respawn_EH", [9999]] call ace_common_fnc_syncedEvent};
     [_respawnWait, [], 120] call ace_common_fnc_waitAndExecute;
@@ -21,7 +21,7 @@ if (GAMENIGHT == 1) then {
 if ((!isNil "_firstCall") && {_firstCall}) Then {
     funcs =
     [
-    /*AW_fnc_mission_clearTown,
+    AW_fnc_mission_clearTown,
     AW_fnc_mission_ressuplyTruck,
     AW_fnc_mission_AAVehicleDeal,
     AW_fnc_mission_destroyRadar,
@@ -34,7 +34,7 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     AW_fnc_mission_tankPlatoon,
     AW_fnc_mission_captureNuclearDevice,
     AW_fnc_mission_destroyMortar,
-    AW_fnc_mission_captureAndDefendTown,*/
+    AW_fnc_mission_captureAndDefendTown,
     AW_fnc_mission_recoverChopperIntel
     ];
 };

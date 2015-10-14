@@ -8,8 +8,7 @@
 };
 //---------------------------------- Server scripts and functions calls
 
-GAMENIGHT = "Gamenight" call BIS_fnc_getParamValue; // CHecking gamenight value
-if (GAMENIGHT == 1 ) then {
+if (("MakeVAAvailable" call BIS_fnc_getParamValue) == 1 ) then {
     [kBox,false] call AW_fnc_VA_filter;  // remove arsenal from the box at spawn.
 } else {
     [kBox,true] call AW_fnc_VA_filter;  //Add VA to box in spawn
