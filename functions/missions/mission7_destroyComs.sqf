@@ -1,15 +1,21 @@
 /*
-| Author:
-|
-|	BACONMOP
-|_____
-|
-|   Description:  Radio Tower needs to be destroyed
-|
-|	Created: 26.January 2014
-|	Last modified: 26.January 2014 By: Christiansen
-|	Coded for AhoyWorld.
-*/
+ * Author: BACONMOP
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission7: Destroy the designated radio tower.
+ *
+ * Phases: None
+ *
+ * Conditions:
+ * Win: Tower destroyed
+ * Fail: None
+ */
 params ["_missionCounter"];
 
 //----------------- Get Radio Tower Position

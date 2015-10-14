@@ -1,17 +1,23 @@
 /*
-| Author:
-|
-|	Pfc.Christiansen
-|_____
-|
-|   Description: Deploy Com-Array
-|
-|	Created: 19.January 2015
-|	Last modified: By:
-|	Made for AhoyWorld.
-*/
-
-//Defines+mission name
+ * Author: Pfc.Christiansen
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission6: Deploy Com-Array
+ *
+ * Phases: 2
+ * 1: Container not present in the marker
+ * 2: Container on the marker, reinforcements called in
+ *
+ * Conditions:
+ * Win: Container on the mission marker and phase 2 done.
+ * Fail: Container destroyed
+ */
 params ["_missionCounter"];
 
 _missionLocations = ["Outskirts","Outskirts_1","Outskirts_2","Outskirts_3","Outskirts_4","Outskirts_5","Outskirts_6","Outskirts_7","Outskirts_8","Outskirts_9","Outskirts_10"];

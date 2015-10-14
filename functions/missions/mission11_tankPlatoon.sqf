@@ -1,15 +1,21 @@
 /*
-| Author:
-|
-|	Pfc.Christiansen & Josh
-|_____
-|
-|   Description: Seek and destroy enemy tank platoon.
-|
-|	Created: 11.March 2015
-|	Last modified: By:
-|	Made for AhoyWorld.
-*/
+ * Authors: Pfc.Christiansen & Josh
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission11: Destroy an enemy tank platoon.
+ *
+ * Phases: None
+ *
+ * Conditions:
+ * Win: Destroy all target vehicles
+ * Fail: None
+ */
 params ["_missionCounter"];
 
 _missionLocations = ["NukeIns","NukeIns_1","NukeIns_2","NukeIns_3","NukeIns_4","NukeIns_5","NukeIns_6","NukeIns_7","NukeIns_8","NukeIns_9","NukeIns_10","NukeIns_11","NukeIns_12","NukeIns_13","NukeIns_14","NukeIns_15","NukeIns_16","NukeIns_17","NukeIns_18","NukeIns_19","NukeIns_20","NukeIns_21","NukeIns_22","NukeIns_23","NukeIns_24"];

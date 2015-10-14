@@ -1,15 +1,21 @@
 /*
-| Author:
-|
-|	Pfc.Christiansen
-|_____
-|
-|   Description: Stop deal between insurgents and opfor
-|
-|	Created: 10.January 2015
-|	Last modified: By:
-|	Made for AhoyWorld.
-*/
+ * Author: Pfc.Christiansen
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission3: Stop deal between insurgents and opfor.
+ *
+ * Phases: None
+ *
+ * Conditions:
+ * Win: AA vehciel destroyed
+ * Fail: None
+ */
 params ["_missionCounter"];
 
 //------------------- Defines

@@ -1,15 +1,21 @@
 /*
-| Author:
-|
-|	Josh
-|_____
-|
-|   Description: Capture enemy ballistic missile launcher
-|
-|	Created: 11.March 2015
-|	Last modified:13. March 2015 By: Pfc.Christiansen
-|	Made for AhoyWorld.
-*/
+ * Authors: Josh
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission12: Capture an enemy ballistic missile launcher.
+ *
+ * Phases: None
+ *
+ * Conditions:
+ * Win: Target vehicle on the return marker
+ * Fail: Target vehicle destroyed
+ */
 params ["_missionCounter"];
 
 _missionLocations = ["NukeIns","NukeIns_1","NukeIns_2","NukeIns_3","NukeIns_4","NukeIns_5","NukeIns_6","NukeIns_7","NukeIns_8","NukeIns_9","NukeIns_10","NukeIns_11","NukeIns_12","NukeIns_13","NukeIns_14","NukeIns_15","NukeIns_16","NukeIns_17","NukeIns_18","NukeIns_19","NukeIns_20","NukeIns_21","NukeIns_22","NukeIns_23","NukeIns_24"];

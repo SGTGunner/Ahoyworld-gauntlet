@@ -1,15 +1,21 @@
 /*
-| Author:
-|
-|	Pfc.Christiansen
-|_____
-|
-|   Description: Destroy Radar Installation.
-|
-|	Created: 10.January 2015
-|	Last modified: By:
-|	Made for AhoyWorld.
-*/
+ * Author: Pfc.Christiansen
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission4: Destroy Radar Installation.
+ *
+ * Phases: None
+ *
+ * Conditions:
+ * Win: Radar vehicle destroyed.
+ * Fail: None
+ */
 params ["_missionCounter"];
 
 _missionLocations = ["Outskirts","Outskirts_1","Outskirts_2","Outskirts_3","Outskirts_4","Outskirts_5","Outskirts_6","Outskirts_7","Outskirts_8","Outskirts_9","Outskirts_10"];

@@ -1,15 +1,23 @@
 /*
-| Author:
-|
-|	BACONMOP
-|_____
-|
-|   Description: Guerilla Meeting.
-|
-|	Created: 29.January 2015
-|	Last modified: 16.02-15 By: BACONMOP Reason: made counter attack more aggressive
-|	Made for AhoyWorld.
-*/
+ * Author: BACONMOP
+ * Rewrote by: alganthe
+ *
+ * Arguments:
+ * 0: amount of missions already completed <NUMBER>
+ *
+ * Return Value:
+ * none
+ *
+ * Mission10: The platoon leader need to meet a guerilla leader and stay with him until the deal has been concluded.
+ *
+ * Phases: 2
+ * 1: Platoon leader isn't near the guerilla leader
+ * 2: Platoon leader is near the guerilla leader, reinforcements called in and timer starts
+ *
+ * Conditions:
+ * Win: Meeting timer ends with both parties alive
+ * Fail: Nobody in the platoon leader slot / Platoon leader or guerilla leader died
+ */
 params ["_missionCounter"];
 
 if (isNil "s3") then {
