@@ -18,6 +18,8 @@
  * Win: Meeting timer ends with both parties alive
  * Fail: Nobody in the platoon leader slot / Platoon leader or guerilla leader died
  */
+ missionInProgress = true;
+ 
 if (isNil "s3") then {
 	_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with the platoon commander, we currently don't have any mission aborted.<br/><br/>",_missionName];
 	["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;

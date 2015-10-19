@@ -16,6 +16,8 @@
  * Win: Tower destroyed
  * Fail: None
  */
+ missionInProgress = true;
+ 
 //----------------- Get Radio Tower Position
 _position = [getMarkerPos "Center", 2000] call CBA_fnc_randPos;
 _flatPos = _position isFlatEmpty[3, 1, 0.3, 30, 0, false];

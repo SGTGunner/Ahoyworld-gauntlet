@@ -16,6 +16,8 @@
  * Win: AA vehciel destroyed
  * Fail: None
  */
+ missionInProgress = true;
+ 
 //------------------- Defines
 _ins_truck = getMarkerPos "mission_3_truck_1";
 _ins_car = getMarkerPos "mission_3_car_1";

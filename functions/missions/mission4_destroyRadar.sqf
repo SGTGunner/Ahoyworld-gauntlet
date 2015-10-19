@@ -16,6 +16,8 @@
  * Win: Radar vehicle destroyed.
  * Fail: None
  */
+ missionInProgress = true;
+ 
 _missionLocations = ["Outskirts","Outskirts_1","Outskirts_2","Outskirts_3","Outskirts_4","Outskirts_5","Outskirts_6","Outskirts_7","Outskirts_8","Outskirts_9","Outskirts_10"];
 //------------------- Get Random Mission Loc
 _selectedLocation = _missionLocations call BIS_fnc_selectRandom;
