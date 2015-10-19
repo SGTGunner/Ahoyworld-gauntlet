@@ -81,6 +81,13 @@ class Params {
 		texts[] ={ "1","2","3","4","5","6","7","8","9","10"};
 		default = 4;
 	};
+	//params 6
+	class missionSelection {
+		title = "Enable mission selection for the platoon commander?";
+		texts[] = {"Yes","No"};
+		values[] = {0,1};
+		default = 1;
+	};
 };
 
 //--------------------------- ACE3 settings
