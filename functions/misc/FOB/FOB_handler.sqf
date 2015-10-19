@@ -69,19 +69,19 @@ if (!isNil "_deployed" && {local _vehicle}) then {
         {moveOut _x} forEach crew _vehicle;
         _vehicle setVehicleLock "LOCKED";
         //---------------------------- Objects
-        MHQ_Net = "Land_CamoNetB_NATO" createVehicle getPos _vehicle;
+        MHQ_Net = "Land_CamoNetB_NATO" createVehicle getPosWorld _vehicle;
         MHQ_Net allowDamage false;
         MHQ_Net attachTo [_vehicle,[0,-2,0]];
         MHQ_Net setDir 180;
-        MHQ_Net setPos getPos MHQ_Net;
-        MHQ_box = "Box_NATO_AmmoVeh_F" createVehicle getPos _vehicle;
+        MHQ_Net setPos getPosWorld MHQ_Net;
+        MHQ_box = "Box_NATO_AmmoVeh_F" createVehicle getPosWorld _vehicle;
         MHQ_box allowDamage false;
         MHQ_box attachTo [_vehicle,[2.5,0,-1]];
         MHQ_box setvariable ["ACE_cargo_size",-1];
-        MHQ_Antenna = "Land_antenna" createVehicle getPos _vehicle;
+        MHQ_Antenna = "Land_antenna" createVehicle getPosWorld _vehicle;
         MHQ_Antenna allowDamage false;
         MHQ_Antenna attachTo [_vehicle,[4,10,-1]];
-        MHQ_Mash = "MASH" createVehicle getPos _vehicle;
+        MHQ_Mash = "MASH" createVehicle getPosWorld _vehicle;
         MHQ_Mash allowDamage false;
         MHQ_Mash attachTo [_vehicle,[-4.2,0,-0.6]];
 
@@ -120,7 +120,7 @@ if (!isNil "_deployed" && {local _vehicle}) then {
         MHQ_box addMagazineCargoGlobal ["rhs_mag_30Rnd_556x45_Mk262_Stanag", 40];
         MHQ_box addMagazineCargoGlobal ["rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red", 40];
         //---------------------------- Fin Hint for user+Grid broadcast(Use EH to broadcast hint)
-        _gridPos = [(getpos _vehicle),true]call ace_common_fnc_getMapGridFromPos;
+        _gridPos = [(getPosWorld _vehicle),true]call ace_common_fnc_getMapGridFromPos;
         _fobHintText = format [
                                                      "<t align='center' size='2.2'>FOB Deployed at </t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/><br/><br/>",_gridPos
                                                                   ];

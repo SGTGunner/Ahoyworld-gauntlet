@@ -68,15 +68,15 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 	  	_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
 	  	_GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-	  	[_GRP1,(getPos mission9Objective)] call BIS_fnc_taskAttack;
+	  	[_GRP1,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
 
 	  	_rndPos2 =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
 	  	_GRP2 = [_rndPos2, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-	  	[_GRP2,(getPos mission9Objective)] call BIS_fnc_taskAttack;
+	  	[_GRP2,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
 
 	  	_rndPos3  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
 	  	_GRP3 = [_rndPos3, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-	  	[_GRP3,(getPos mission9Objective)] call BIS_fnc_taskAttack;
+	  	[_GRP3,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
 
 	  	[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
