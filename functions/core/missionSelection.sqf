@@ -38,7 +38,7 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
     ];
 };
 //------------------- Check if the mission amount has been reached.
-if (("missionSelection" call BIS_fnc_getParamValue) == 1) then {
+if (("missionSelection" call BIS_fnc_getParamValue) == 0) then {
     if (("MissionAmount" call BIS_fnc_getParamValue) == gauntlet_missionCounter) then {
         [] spawn BIS_fnc_EndMission;
     } else {
