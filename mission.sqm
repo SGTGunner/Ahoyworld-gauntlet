@@ -4446,12 +4446,13 @@ class Mission
 		class Item78
 		{
 			position[]={4764.4741,65.082397,821.64465};
-			azimut=186.68321;
+			azimut=186.683;
 			offsetY=0.88;
 			id=198;
 			side="EMPTY";
 			vehicle="Land_Laptop_unfolded_F";
 			skill=0.60000002;
+			text="missionSelectionLaptop";
 			init="this enableSimulation false;";
 		};
 		class Item79

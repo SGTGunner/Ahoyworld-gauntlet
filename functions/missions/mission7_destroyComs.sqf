@@ -16,8 +16,6 @@
  * Win: Tower destroyed
  * Fail: None
  */
-params ["_missionCounter"];
-
 //----------------- Get Radio Tower Position
 _position = [getMarkerPos "Center", 2000] call CBA_fnc_randPos;
 _flatPos = _position isFlatEmpty[3, 1, 0.3, 30, 0, false];
@@ -59,7 +57,7 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 //----------------- mission PFH
 _missionPFH = {
 	if (!alive mission7Objective) then {
-		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
+		(_this select 0) params ["_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with that mission. Further tasking will occur shortly</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
@@ -72,8 +70,9 @@ _missionPFH = {
 
 		[{["m7"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[(_missionCounter+1)] call AW_fnc_missionSelection;
+		[_roughPos] call call AW_fnc_missionTransition;
+		gauntlet_missionCounter = gauntlet_missionCounter + 1;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

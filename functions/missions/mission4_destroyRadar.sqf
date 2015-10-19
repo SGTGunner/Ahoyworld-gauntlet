@@ -16,8 +16,6 @@
  * Win: Radar vehicle destroyed.
  * Fail: None
  */
-params ["_missionCounter"];
-
 _missionLocations = ["Outskirts","Outskirts_1","Outskirts_2","Outskirts_3","Outskirts_4","Outskirts_5","Outskirts_6","Outskirts_7","Outskirts_8","Outskirts_9","Outskirts_10"];
 //------------------- Get Random Mission Loc
 _selectedLocation = _missionLocations call BIS_fnc_selectRandom;
@@ -59,7 +57,7 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 //------------------- PFH checking every 10s if the mission has been completed
 _missionPFH = {
 	if (!alive mission4Objective) then {
-		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
+		(_this select 0) params ["_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
@@ -78,8 +76,9 @@ _missionPFH = {
 
 		[{["m4"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation] call AW_fnc_missionTransition;
+		gauntlet_missionCounter = gauntlet_missionCounter + 1;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

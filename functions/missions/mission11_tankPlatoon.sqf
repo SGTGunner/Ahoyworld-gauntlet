@@ -16,8 +16,6 @@
  * Win: Destroy all target vehicles
  * Fail: None
  */
-params ["_missionCounter"];
-
 _missionLocations = ["NukeIns","NukeIns_1","NukeIns_2","NukeIns_3","NukeIns_4","NukeIns_5","NukeIns_6","NukeIns_7","NukeIns_8","NukeIns_9","NukeIns_10","NukeIns_11","NukeIns_12","NukeIns_13","NukeIns_14","NukeIns_15","NukeIns_16","NukeIns_17","NukeIns_18","NukeIns_19","NukeIns_20","NukeIns_21","NukeIns_22","NukeIns_23","NukeIns_24"];
 //------------------- Get Random Mission Loc
 _selectedLocation = _missionLocations call BIS_fnc_selectRandom;
@@ -75,7 +73,7 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 //------------------- PFH
 _missionPFH = {
 	if ((!alive mission11Objective1) && (!alive mission11Objective2) && (!alive mission11Objective3) && (!alive mission11Objective4) && (!alive mission11Objective5)) then {
-		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
+		(_this select 0) params ["_missionName","_selectedLocation"];
 
 		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
 		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
@@ -110,8 +108,10 @@ _missionPFH = {
 
 		[{["m11"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation] call AW_fnc_missionTransition;
+		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };
-[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+[_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

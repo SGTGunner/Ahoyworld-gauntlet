@@ -9,7 +9,7 @@
  * Return Value:
  * nothing
  */
-params ["_missionCounter","_previousLocation"];
+params ["_previousLocation"];
 
 _bluforCheck = createTrigger ["EmptyDetector",getMarkerPos _previousLocation,false];
 _bluforCheck setTriggerArea [400,400,0,false];
@@ -39,12 +39,8 @@ _TriggerPFH = {
         _markerTransition1 = nil;
         _markerTransition2 = nil;
 
-		_nextMission = {
-			(_this select 0) params ["_missionCounter"];
-			[_missionCounter] call AW_fnc_missionSelection;
-		};
-		[_nextMission, [_missionCounter], 10] call ace_common_fnc_waitAndExecute;
+		[{[] call AW_fnc_missionSelection;}, [], 10] call ace_common_fnc_waitAndExecute;
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
     };
 };
-[_TriggerPFH,10,[_missionCounter]] call CBA_fnc_addPerFrameHandler;
+[_TriggerPFH,10,[]] call CBA_fnc_addPerFrameHandler;
