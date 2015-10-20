@@ -19,7 +19,8 @@
  * Fail: Chopper destroyed before the download was complete
  */
  missionInProgress = true;
- 
+publicVariable "missionInProgress";
+
 _missionLocations = ["Shuhada","Shuhada_1","Shuhada_2","Shuhada_3","Shuhada_4","Shuhada_5","sinai","sinai_1","sinai_2","sinai_3","sinai_4","sinai_5","West_Sinai","West_Sinai_1","West_Sinai_2","West_Sinai_3","West_Sinai_4","West_Sinai_5","Resafa","Resafa_1","Resafa_2","Resafa_3","Resafa_4","Resafa_5","Nazal","Nazal_1","Nazal_2","Nazal_3","Nazal_4","Nazal_5","Nazal_6","Nazal_7","Al_Fallujah","Al_Fallujah_1","Al_Fallujah_2","Al_Fallujah_3","Al_Fallujah_4","Al_Fallujah_5","Industrial_Park","Industrial_Park_1","Industrial_Park_2","Industrial_Park_3","Industrial_Park_4","Industrial_Park_5","Askari","Askari_2","Askari_3","Askari_3","Askari_4","Askari_5","Jeghaifi","Jeghaifi_1","Jeghaifi_2","Jeghaifi_3","Jeghaifi_4","Jeghaifi_5","Shurta","Shurta_1","Shurta_2","Shurta_3","Shurta_4","Shurta_5","Mualumeen","Mualumeen_1","Mualumeen_2","Mualumeen_3","Mualumeen_4","Mualumeen_5","Muhandisin","Muhandisin_1","Muhandisin_2","Muhandisin_3","Muhandisin_4","Muhandisin_5","Jolan","Jolan_1","Jolan_2","Jolan_3","Jolan_4","Jolan_5","Jolan_6","Jolan_7","North_West","North_West_1","North_West_2","North_West_3","North_West_4","North_West_5","North_West_6","North_West_7"];
 //------------------- Get Random Mission Loc
 _selectedLocation = _missionLocations call BIS_fnc_selectRandom;
@@ -28,8 +29,8 @@ _selectedLocation = _missionLocations call BIS_fnc_selectRandom;
 _missionName = [] call AW_fnc_missionName;
 
 //------------------- Objective
-_rndPos = [getMarkerPos _selectedLocation, 200] call CBA_fnc_randPos;
-mission16Objective = "RHS_UH60M" createVehicle _rndPos;
+rndPos = [getMarkerPos _selectedLocation, 200] call CBA_fnc_randPos;
+mission16Objective = "RHS_UH60M" createVehicle rndPos;
 mission16Objective setDamage .9;
 
 //------------------- Markers
@@ -51,7 +52,7 @@ _marker3 = createMarker ["mission16_2_mrk", getMarkerPos "AOMarker"];
 "mission16_2_mrk" setMarkerText "Recover intel from the downed helicopter.";
 
 //------------------- Triggers
-nextPhaseTrigger = createTrigger ["EmptyDetector",_rndPos,false];
+nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
 nextPhaseTrigger setTriggerArea [20,20,20,false];
 nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
 nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
@@ -63,27 +64,27 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 //------------------- PFH checking every 10s if the mission has been completed
 _timerPFH = {
 	if ((!isNil "missionNextPhase") && {!(missionNextPhase)}) then {
-		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation","_rndPos"];
+		(_this select 0) params ["_missionName"];
 
 		_misSUCText = format ['OP Update<br/><br/>____________________<br/>Uplink with the helicopter has been lost. Restart the download.',_missionName];
 		['Globalhint_EH', [_misSUCText]] call ace_common_fnc_globalEvent;
 
 		missionTimer = nil;
 
-		nextPhaseTrigger = createTrigger ["EmptyDetector",_rndPos,false];
+		nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
 		nextPhaseTrigger setTriggerArea [20,20,20,false];
 		nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
 		nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
 	};
 	if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
-		(_this select 0) params ["_missionCounter","_missionName","_selectedLocation","_rndPos"];
+		(_this select 0) params ["_missionName"];
 
 		_misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel download has begun. Dig in and prepare for an attack.</t>",_missionName];
 		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
 
 		missionNextPhase = nil;
 
-		nextPhaseTrigger = createTrigger ["EmptyDetector",_rndPos,false];
+		nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
 		nextPhaseTrigger setTriggerArea [20,20,20,false];
 		nextPhaseTrigger setTriggerActivation ["WEST","NOT PRESENT",false];
 		nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = false;",""];
@@ -94,7 +95,7 @@ _timerPFH = {
 		missionTimer = missionTimer + 10;
 	};
 	if ((!isNil "missionTimer") && {missionTimer >= (300 + (random 300))}) then {
-		(_this select 0) params ["_missionName"];
+		(_this select 0) params ["_missionName",""];
 
 		_misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel is secured. Now destroy the helicopter and extract.</t>",_missionName];
 		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -145,7 +146,8 @@ _missionPFH = {
 		deleteMarker "mission16_2_mrk";
 
 		enemyReinforcements = nil;
-
+        rndPos = nil;
+        
 		_missionCLearing = {
 			mission16Objective = nil;
 			GRP1 = nil;
@@ -157,6 +159,8 @@ _missionPFH = {
 
 		[_selectedLocation] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        mission16Completed = true;
+        publicVariable "mission16Completed";
 
 		[timerPFHhandle] call CBA_fnc_removePerFrameHandler;
 		[reinforcementsPFHhandle] call CBA_fnc_removePerFrameHandler;
@@ -173,6 +177,7 @@ _missionPFH = {
 		deleteMarker "mission16_2_mrk";
 
 		missionWin = nil;
+        rndPos = nil;
 		enemyReinforcements = nil;
 
 		_missionCLearing = {
@@ -186,6 +191,8 @@ _missionPFH = {
 
 		[_selectedLocation] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        mission16Completed = true;
+        publicVariable "mission16Completed";
 
 		[timerPFHhandle] call CBA_fnc_removePerFrameHandler;
 		[reinforcementsPFHhandle] call CBA_fnc_removePerFrameHandler;

@@ -17,7 +17,8 @@
  * Fail: None
  */
  missionInProgress = true;
- 
+publicVariable "missionInProgress";
+
 _missionLocations = ["Outskirts","Outskirts_1","Outskirts_2","Outskirts_3","Outskirts_4","Outskirts_5","Outskirts_6","Outskirts_7","Outskirts_8","Outskirts_9","Outskirts_10"];
 //------------------- Get Random Mission Loc
 _selectedLocation = _missionLocations call BIS_fnc_selectRandom;
@@ -80,6 +81,9 @@ _missionPFH = {
 
 		[_selectedLocation] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        mission4Completed = true;
+        publicVariable "mission4Completed";
+
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };

@@ -17,7 +17,8 @@
  * Fail: None
  */
  missionInProgress = true;
- 
+publicVariable "missionInProgress";
+
 //----------------- Get Radio Tower Position
 _position = [getMarkerPos "Center", 2000] call CBA_fnc_randPos;
 _flatPos = _position isFlatEmpty[3, 1, 0.3, 30, 0, false];
@@ -74,6 +75,9 @@ _missionPFH = {
 
 		[_roughPos] call call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        mission7Completed = true;
+        publicVariable "mission7Completed";
+
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };

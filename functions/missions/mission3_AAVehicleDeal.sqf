@@ -17,7 +17,8 @@
  * Fail: None
  */
  missionInProgress = true;
- 
+publicVariable "missionInProgress";
+
 //------------------- Defines
 _ins_truck = getMarkerPos "mission_3_truck_1";
 _ins_car = getMarkerPos "mission_3_car_1";
@@ -106,6 +107,9 @@ _missionPFH = {
 
 		["mission_3_aa"] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        mission3Completed = true;
+        publicVariable "mission3Completed";
+
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
 };

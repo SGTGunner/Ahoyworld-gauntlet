@@ -20,4 +20,3 @@ execVM "scripts\core\ambient_heli.sqf";		// Ambient Airpatrols, needs REWRITE
 execVM "scripts\misc\clean.sqf";			// Cleanup script, needs REVIEW
 execVM "scripts\core\houseFilling.sqf";		// Fill house, needs REVIEW
 [AW_fnc_missionSelection, [true], 30] call ace_common_fnc_waitAndExecute;
-["missionInProgressCheck",AW_fnc_missionInProgress_serverEH] call ace_common_fnc_addEventHandler;

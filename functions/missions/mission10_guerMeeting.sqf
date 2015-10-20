@@ -19,7 +19,8 @@
  * Fail: Nobody in the platoon leader slot / Platoon leader or guerilla leader died
  */
  missionInProgress = true;
- 
+publicVariable "missionInProgress";
+
 if (isNil "s3") then {
 	_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with the platoon commander, we currently don't have any mission aborted.<br/><br/>",_missionName];
 	["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
@@ -133,6 +134,8 @@ if (isNil "s3") then {
 
 			[_selectedLocation] call AW_fnc_missionTransition;
 			gauntlet_missionCounter = gauntlet_missionCounter + 1;
+            mission10Completed = true;
+            publicVariable "mission10Completed";
 
 			[_this select 1] call CBA_fnc_removePerFrameHandler;
 			_mission10_PFH_2 call CBA_fnc_removePerFrameHandler;
@@ -163,6 +166,8 @@ if (isNil "s3") then {
 
 			[_selectedLocation] call AW_fnc_missionTransition;
 			gauntlet_missionCounter = gauntlet_missionCounter + 1;
+            mission10Completed = true;
+            publicVariable "mission10Completed";
 
 			_mission10_PFH_1 call CBA_fnc_removePerFrameHandler;
 			[_this select 1] call CBA_fnc_removePerFrameHandler;

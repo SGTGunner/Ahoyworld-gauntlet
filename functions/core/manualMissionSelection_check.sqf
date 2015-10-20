@@ -12,9 +12,6 @@ params ["_unit"];
 private ["_return"];
 
 if (("missionSelection" call BIS_fnc_getParamValue) == 1) then {
-    _client = (owner vehicle _unit);
-
-    ["missionInProgressCheck", [_client]] call ace_common_fnc_serverEvent;
 
     if ((vehicle _unit == s3) && {!isNil 'missionInProgress'} && {!(missionInProgress)}) then {
         _return = true;

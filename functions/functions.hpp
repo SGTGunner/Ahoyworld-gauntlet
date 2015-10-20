@@ -8,8 +8,7 @@ class AW {
         class respawnTime_EH {file = "functions\core\respawnTime_EH.sqf";};
         class missionSelection_interactions {file = "functions\core\missionSelection_interactions.sqf";};
         class manualMissionSelection_check {file = "functions\core\manualMissionSelection_check.sqf";};
-        class missionInProgress_serverEH {file = "functions\core\missionInProgress_serverEH.sqf";};
-
+        
         //Missions
         class mission_clearTown {file = "functions\missions\mission1_clearTown.sqf";};
         class mission_ressuplyTruck {file = "functions\missions\mission2_ressuplyTruck.sqf";};
