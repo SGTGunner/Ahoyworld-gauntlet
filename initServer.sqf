@@ -15,8 +15,8 @@ if (("MakeVAAvailable" call BIS_fnc_getParamValue) == 1 ) then {
 };
 
 [true] spawn AW_fnc_supplyBox_refiller;		// Supply Depot Reloader, causes errors needs REWRITE
-execVM "scripts\core\2_AI_Machine.sqf";				// Ambient AI, needs REWRITE
-execVM "scripts\core\ambient_heli.sqf";				// Ambient Airpatrols, needs REWRITE
-execVM "scripts\misc\clean.sqf";					// Cleanup script, needs REVIEW
-execVM "scripts\core\houseFilling.sqf";				// Fill house, needs REVIEW
-[AW_fnc_missionSelection, [0,true], 30] call ace_common_fnc_waitAndExecute;
+execVM "scripts\core\2_AI_Machine.sqf";		// Ambient AI, needs REWRITE
+execVM "scripts\core\ambient_heli.sqf";		// Ambient Airpatrols, needs REWRITE
+execVM "scripts\misc\clean.sqf";			// Cleanup script, needs REVIEW
+execVM "scripts\core\houseFilling.sqf";		// Fill house, needs REVIEW
+[AW_fnc_missionSelection, [true], 30] call ace_common_fnc_waitAndExecute;

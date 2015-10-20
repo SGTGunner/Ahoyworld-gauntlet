@@ -81,6 +81,13 @@ class Params {
 		texts[] ={ "1","2","3","4","5","6","7","8","9","10"};
 		default = 4;
 	};
+	//params 6
+	class missionSelection {
+		title = "Enable mission selection for the platoon commander?";
+		texts[] = {"No","Yes"};
+		values[] = {0,1};
+		default = 0;
+	};
 };
 
 //--------------------------- ACE3 settings
@@ -104,5 +111,29 @@ class ACE_Settings {
 	    value = 1;
 	    typeName = "SCALAR";
 	    force = 1;
+	};
+};
+
+//--------------------------- RemoteExec settings
+class CfgRemoteExec {
+	class Functions {
+		// State of remoteExec: 0-turned off, 1-turned on, taking whitelist into account, 2-turned on, however, ignoring whitelists (default because of backward compatibility)
+    	mode = 2;
+       	jip = 1;
+       	class AW_fnc_mission_clearTown { allowedTargets=2; }; // can target only the server
+	   	class AW_fnc_mission_ressuplyTruck { allowedTargets=2; };
+	   	class AW_fnc_mission_AAVehicleDeal { allowedTargets=2; };
+	   	class AW_fnc_mission_destroyRadar { allowedTargets=2; };
+	   	class AW_fnc_mission_KillHVT { allowedTargets=2; };
+	   	class AW_fnc_mission_deployComs { allowedTargets=2; };
+	   	class AW_fnc_mission_destroyComs { allowedTargets=2; };
+	   	class AW_fnc_mission_recoverCrate { allowedTargets=2; };
+	   	class AW_fnc_mission_guerMeeting { allowedTargets=2; };
+	   	class AW_fnc_mission_destroyUAV { allowedTargets=2; };
+	   	class AW_fnc_mission_tankPlatoon { allowedTargets=2; };
+	   	class AW_fnc_mission_captureNuclearDevice { allowedTargets=2; };
+	   	class AW_fnc_mission_destroyMortar { allowedTargets=2; };
+	   	class AW_fnc_mission_captureAndDefendTown { allowedTargets=2; };
+	   	class AW_fnc_mission_recoverChopperIntel { allowedTargets=2; };
 	};
 };
