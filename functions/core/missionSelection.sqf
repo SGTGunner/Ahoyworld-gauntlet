@@ -39,7 +39,7 @@ if ((!isNil "_firstCall") && {_firstCall}) Then {
 };
 //------------------- Check if the mission amount has been reached.
 if (("missionSelection" call BIS_fnc_getParamValue) == 1) then {
-    _hintText = format ['OP Update<br/><br/>____________________<br/>Mission selection available.',_missionName];
+    _hintText = format ['Information<br/><br/>____________________<br/>Manual mission selection available.',_missionName];
     ['Globalhint_EH', [_hintText]] call ace_common_fnc_globalEvent;
 } else {
     if ((!isNil "gauntlet_missionCounter") && {("MissionAmount" call BIS_fnc_getParamValue) == gauntlet_missionCounter}) then {
