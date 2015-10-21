@@ -55,7 +55,7 @@ _marker3 = createMarker ["mission16_2_mrk", getMarkerPos "AOMarker"];
 nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
 nextPhaseTrigger setTriggerArea [20,20,20,false];
 nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
-nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
+nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;enemyReinforcements = false;",""];
 
 //------------------- Mission hint
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A helicopter carrying important information has been shot down. Get out there and recover the data.<br/><br/>",_missionName];
@@ -107,8 +107,8 @@ _timerPFH = {
 timerPFHhandle = [_timerPFH,10,[_missionName]] call CBA_fnc_addPerFrameHandler;
 
 _reinforcementsPFH = {
-	if ((!isNil "enemyReinforcements") && {enemyReinforcements}) then {
-		(_this select 0) params ["_selectedLocation"];
+    if ((!isNil "enemyReinforcements") && {!(enemyReinforcements)}) then {
+        (_this select 0) params ["_selectedLocation"];
 
 		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
 		GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
@@ -126,13 +126,13 @@ _reinforcementsPFH = {
 		GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
 		[GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		enemyReinforcements = false;
-	};
-if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4) && (count (units GRP4) < 4)}) then {
 		enemyReinforcements = true;
 	};
+    if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4) && (count (units GRP4) < 4)}) then {
+        enemyReinforcements = false;
+	};
 };
-reinforcementsPFHhandle = [_timerPFH,10,[_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+reinforcementsPFHhandle = [_reinforcementsPFH,10,[_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
 _missionPFH = {
 	if ((isNil "missionWin") && {!alive mission16Objective}) then {
@@ -147,7 +147,7 @@ _missionPFH = {
 
 		enemyReinforcements = nil;
         rndPos = nil;
-        
+
 		_missionCLearing = {
 			mission16Objective = nil;
 			GRP1 = nil;
@@ -180,14 +180,14 @@ _missionPFH = {
         rndPos = nil;
 		enemyReinforcements = nil;
 
-		_missionCLearing = {
+		_missionClearing = {
 			mission16Objective = nil;
 			GRP1 = nil;
 			GRP2 = nil;
 			GRP3 = nil;
 			GRP4 = nil;
 		};
-		[_missionCLearing,[], 300] call ace_common_fnc_waitAndExecute;
+		[_missionClearing,[], 300] call ace_common_fnc_waitAndExecute;
 
 		[_selectedLocation] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
