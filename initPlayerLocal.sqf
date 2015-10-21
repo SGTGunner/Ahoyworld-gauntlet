@@ -18,6 +18,7 @@ if (!hasInterface) then {
     [] call AW_fnc_diary; // Diary
     execVM "scripts\misc\QS_icons.sqf"; // Icons
     [AW_fnc_loadoutsExec,[]] call ace_common_fnc_execNextFrame; // Apply loadouts
+    ["zeusAddUnitEH", [(vehicle player)]] call ace_common_fnc_serverEvent; // Add the unit to all curators
 
     // ACE3 interactions
     [true,"rhsusf_M1083A1P2_B_M2_d_MHQ_fmtv_usarmy"] call AW_fnc_FOB_interactions_add; // Interactions for the FOB
