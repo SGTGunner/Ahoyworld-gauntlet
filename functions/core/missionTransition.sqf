@@ -35,13 +35,13 @@ _TriggerPFH = {
         deleteMarker "missionTransition1_mrk";
         deleteMarker "missionTransition2_mrk";
 
-		deleteVehicle _bluforCheck;
-		westNotPresent = nil;
+        deleteVehicle _bluforCheck;
+        westNotPresent = nil;
         _markerTransition1 = nil;
         _markerTransition2 = nil;
 
-		[{[] call AW_fnc_missionSelection;}, [], 10] call ace_common_fnc_waitAndExecute;
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
+        [{[] call AW_fnc_missionSelection;}, [], 10] call ace_common_fnc_waitAndExecute;
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
     };
 };
 [_TriggerPFH,10,[]] call CBA_fnc_addPerFrameHandler;

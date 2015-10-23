@@ -75,48 +75,46 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 //------------------- PFH
 _missionPFH = {
-	if ((!alive mission11Objective1) && (!alive mission11Objective2) && (!alive mission11Objective3) && (!alive mission11Objective4) && (!alive mission11Objective5)) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+    if ((!alive mission11Objective1) && (!alive mission11Objective2) && (!alive mission11Objective3) && (!alive mission11Objective4) && (!alive mission11Objective5)) then {
+        (_this select 0) params ["_missionName","_selectedLocation"];
 
-		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
-		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+        _misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
+        ["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission11_mrk";
-		deleteMarker "mission11_1_mrk";
-		deleteMarker "mission11_2_mrk";
+        deleteMarker "mission11_mrk";
+        deleteMarker "mission11_1_mrk";
+        deleteMarker "mission11_2_mrk";
 
-		_missionClearing = {
-			deleteVehicle mission11Objective1;
-			deleteVehicle mission11Objective2;
-			deleteVehicle mission11Objective3;
-			deleteVehicle mission11Objective4;
-			deleteVehicle mission11Objective5;
-			deleteVehicle mission11Object1;
-			deleteVehicle mission11Object2;
-			deleteVehicle mission11Object3;
-			deleteVehicle mission11Object4;
+        [{
+            deleteVehicle mission11Objective1;
+            deleteVehicle mission11Objective2;
+            deleteVehicle mission11Objective3;
+            deleteVehicle mission11Objective4;
+            deleteVehicle mission11Objective5;
+            deleteVehicle mission11Object1;
+            deleteVehicle mission11Object2;
+            deleteVehicle mission11Object3;
+            deleteVehicle mission11Object4;
 
-			mission11Objective1 = nil;
-			mission11Objective2 = nil;
-			mission11Objective3 = nil;
-			mission11Objective4 = nil;
-			mission11Objective5 = nil;
-			mission11Object1 = nil;
-			mission11Object2 = nil;
-			mission11Object3 = nil;
-			mission11Object4 = nil;
-		};
+            mission11Objective1 = nil;
+            mission11Objective2 = nil;
+            mission11Objective3 = nil;
+            mission11Objective4 = nil;
+            mission11Objective5 = nil;
+            mission11Object1 = nil;
+            mission11Object2 = nil;
+            mission11Object3 = nil;
+            mission11Object4 = nil;
+        };,[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_missionClearing,[], 60] call ace_common_fnc_waitAndExecute;
+        [{["m11"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[{["m11"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
-
-		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission11Completed = true;
         publicVariable "mission11Completed";
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
 [_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

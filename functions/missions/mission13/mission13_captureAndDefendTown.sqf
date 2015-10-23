@@ -55,63 +55,61 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
 //------------------- Triggers
-_missionNextPhaseTriggerWait = {
-	(_this select 0) params ["_selectedLocation"];
-	missionNextPhaseTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
-	missionNextPhaseTrigger setTriggerArea [500,500,0,false];
-	missionNextPhaseTrigger setTriggerActivation ["EAST","NOT PRESENT", false];
-	missionNextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
-};
-[_missionNextPhaseTriggerWait, [_selectedLocation], 60] call ace_common_fnc_waitAndExecute;
+[{
+    (_this select 0) params ["_selectedLocation"];
+    missionNextPhaseTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
+    missionNextPhaseTrigger setTriggerArea [500,500,0,false];
+    missionNextPhaseTrigger setTriggerActivation ["EAST","NOT PRESENT", false];
+    missionNextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
+}, [_selectedLocation], 60] call ace_common_fnc_waitAndExecute;
 
 //------------------- PFH
 _missionPFH = {
-	if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+(_this select 0) params ["_missionName","_selectedLocation"];
+    if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
 
-		_misMidHintText = format ["<t align='center' size='2.2'>Attention!</t><br/><t size='1.5' align='center' color='#FFCF11'></t><br/>____________________<br/>Enemy reinforcements have arrived! Prepare for Counter-Attack!<br/><br/>",_missionName];
-		["Globalhint_EH", [_misMidHintText]] call ace_common_fnc_globalEvent;
+        _misMidHintText = format ["<t align='center' size='2.2'>Attention!</t><br/><t size='1.5' align='center' color='#FFCF11'></t><br/>____________________<br/>Enemy reinforcements have arrived! Prepare for Counter-Attack!<br/><br/>",_missionName];
+        ["Globalhint_EH", [_misMidHintText]] call ace_common_fnc_globalEvent;
 
-		missionNextPhase = nil;
+        missionNextPhase = nil;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
-	};
-	if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4) && (count (units GRP4) < 4)}) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+    };
+    if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4) && (count (units GRP4) < 4)}) then {
 
-		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
-		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+        _misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
+        ["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission13_1_mrk";
-		deleteMarker "mission13_mrk";
-		deleteMarker "mission13_2_mrk";
+        deleteMarker "mission13_1_mrk";
+        deleteMarker "mission13_mrk";
+        deleteMarker "mission13_2_mrk";
 
-		GRP1 = nil;
-		GRP2 = nil;
-		GRP3 = nil;
+        GRP1 = nil;
+        GRP2 = nil;
+        GRP3 = nil;
 
-		[{["m13"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+        [{["m13"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission13Completed = true;
         publicVariable "mission13Completed";
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
 [_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

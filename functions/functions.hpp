@@ -57,17 +57,17 @@ class AW {
 };
 class QS {
     tag = "QS";
-	class functions {
+    class functions {
         file = "functions\QSfnc";
-		class vMonitor {};
-		class vSetup02 {};
+        class vMonitor {};
+        class vSetup02 {};
         class conditionMobileArmory {};
-	};
+    };
 };
 class KC {
-	tag= "KC";
-	class functions {
-		file = "functions";
-		class reinforceChopper {};
-	};
+    tag= "KC";
+    class functions {
+        file = "functions";
+        class reinforceChopper {};
+    };
 };

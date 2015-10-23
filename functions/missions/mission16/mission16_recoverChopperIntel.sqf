@@ -68,48 +68,48 @@ _missionTimer = 300 + (random 300);
 _timerPFH = {
     (_this select 0) params ["_missionName","_missionTimer"];
 
-	if ((!isNil "missionNextPhase") && {!(missionNextPhase)}) then {
+    if ((!isNil "missionNextPhase") && {!(missionNextPhase)}) then {
 
-		_misSUCText = format ['OP Update<br/><br/>____________________<br/>Uplink with the helicopter has been lost. Restart the download.',_missionName];
-		['Globalhint_EH', [_misSUCText]] call ace_common_fnc_globalEvent;
+        _misSUCText = format ['OP Update<br/><br/>____________________<br/>Uplink with the helicopter has been lost. Restart the download.',_missionName];
+        ['Globalhint_EH', [_misSUCText]] call ace_common_fnc_globalEvent;
 
-		missionTimer = nil;
+        missionTimer = nil;
 
-		nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
-		nextPhaseTrigger setTriggerArea [20,20,20,false];
-		nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
-		nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
-	};
-	if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
+        nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
+        nextPhaseTrigger setTriggerArea [20,20,20,false];
+        nextPhaseTrigger setTriggerActivation ["WEST","PRESENT",false];
+        nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
+    };
+    if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
 
-		_misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel download has begun. Dig in and prepare for an attack.</t>",_missionName];
-		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
+        _misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel download has begun. Dig in and prepare for an attack.</t>",_missionName];
+        ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
 
-		missionNextPhase = nil;
+        missionNextPhase = nil;
 
-		nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
-		nextPhaseTrigger setTriggerArea [20,20,20,false];
-		nextPhaseTrigger setTriggerActivation ["WEST","NOT PRESENT",false];
-		nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = false;",""];
+        nextPhaseTrigger = createTrigger ["EmptyDetector",rndPos,false];
+        nextPhaseTrigger setTriggerArea [20,20,20,false];
+        nextPhaseTrigger setTriggerActivation ["WEST","NOT PRESENT",false];
+        nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = false;",""];
 
-		missionTimer = 0;
-	};
-	if (!isNil "missionTimer") then {
+        missionTimer = 0;
+    };
+    if (!isNil "missionTimer") then {
         missionTimer = missionTimer + 10;
 
         if (missionTimer >= 30) then {
             _misSUCText = format ["Download progression: %1",((missionTimer / _missionTimer) * 100)];
             ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
         };
+    };
+    if ((!isNil "missionTimer") && {missionTimer >= _missionTimer}) then {
+
+        _misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel is secured. Now destroy the helicopter and extract.</t>",_missionName];
+        ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
+
+        missionWin = true;
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
 	};
-	if ((!isNil "missionTimer") && {missionTimer >= _missionTimer}) then {
-
-		_misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel is secured. Now destroy the helicopter and extract.</t>",_missionName];
-		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
-
-		missionWin = true;
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	}
 };
 timerPFHhandle = [_timerPFH,10,[_missionName,_missionTimer]] call CBA_fnc_addPerFrameHandler;
 
@@ -117,42 +117,42 @@ _reinforcementsPFH = {
     if ((!isNil "enemyReinforcements") && {!(enemyReinforcements)}) then {
         (_this select 0) params ["_selectedLocation"];
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP1,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP2 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP2,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP3 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP3,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-		GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-		[GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP4 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+        [GRP4,(getMarkerPos  _selectedLocation)] call BIS_fnc_taskAttack;
 
-		enemyReinforcements = true;
-	};
+        enemyReinforcements = true;
+    };
     if ((!isNil "GRP1") && {(count (units GRP1) < 4) && (count (units GRP2) < 4) && (count (units GRP3) < 4) && (count (units GRP4) < 4)}) then {
         enemyReinforcements = false;
-	};
+    };
 };
 reinforcementsPFHhandle = [_reinforcementsPFH,10,[_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
 _missionPFH = {
-	if ((isNil "missionWin") && {!alive mission16Objective}) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+    if ((isNil "missionWin") && {!alive mission16Objective}) then {
+        (_this select 0) params ["_missionName","_selectedLocation"];
 
-		_misSUCText = format ["<t align='center' size='2.2'>OP Failed</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1. The chopper was destroyed before the download could be complete.</t>",_missionName];
-		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
+        _misSUCText = format ["<t align='center' size='2.2'>OP Failed</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1. The chopper was destroyed before the download could be complete.</t>",_missionName];
+        ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission16_mrk";
-		deleteMarker "mission16_1_mrk";
-		deleteMarker "mission16_2_mrk";
+        deleteMarker "mission16_mrk";
+        deleteMarker "mission16_1_mrk";
+        deleteMarker "mission16_2_mrk";
 
-		enemyReinforcements = nil;
+        enemyReinforcements = nil;
         rndPos = nil;
 
         GRP1 = nil;
@@ -165,47 +165,47 @@ _missionPFH = {
             mission16Objective = nil;
         },[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission16Completed = true;
         publicVariable "mission16Completed";
 
-		[timerPFHhandle] call CBA_fnc_removePerFrameHandler;
-		[reinforcementsPFHhandle] call CBA_fnc_removePerFrameHandler;
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
-	if ((!isNil "missionWin") && {missionWin} && {!alive mission16Objective}) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+        [timerPFHhandle] call CBA_fnc_removePerFrameHandler;
+        [reinforcementsPFHhandle] call CBA_fnc_removePerFrameHandler;
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
+    if ((!isNil "missionWin") && {missionWin} && {!alive mission16Objective}) then {
+        (_this select 0) params ["_missionName","_selectedLocation"];
 
-		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1. Now get out of the area and new tasking will be assigned</t>",_missionName];
-		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+        _misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1. Now get out of the area and new tasking will be assigned</t>",_missionName];
+        ["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission16_mrk";
-		deleteMarker "mission16_1_mrk";
-		deleteMarker "mission16_2_mrk";
+        deleteMarker "mission16_mrk";
+        deleteMarker "mission16_1_mrk";
+        deleteMarker "mission16_2_mrk";
 
-		missionWin = nil;
+        missionWin = nil;
         rndPos = nil;
-		enemyReinforcements = nil;
+        enemyReinforcements = nil;
 
         GRP1 = nil;
         GRP2 = nil;
         GRP3 = nil;
         GRP4 = nil;
 
-		[{
+        [{
             deleteVehicle mission16Objective;
-			mission16Objective = nil;
-		},[], 60] call ace_common_fnc_waitAndExecute;
+            mission16Objective = nil;
+        },[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission16Completed = true;
         publicVariable "mission16Completed";
 
-		[timerPFHhandle] call CBA_fnc_removePerFrameHandler;
-		[reinforcementsPFHhandle] call CBA_fnc_removePerFrameHandler;
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        [timerPFHhandle] call CBA_fnc_removePerFrameHandler;
+        [reinforcementsPFHhandle] call CBA_fnc_removePerFrameHandler;
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
 [_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

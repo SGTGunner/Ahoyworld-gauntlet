@@ -63,32 +63,32 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 //------------------- PFHs
  _missionNextPhasePFH = {
-	 if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
-		 (_this select 0) params ["_missionName","_selectedLocation"];
+     if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
+         (_this select 0) params ["_missionName","_selectedLocation"];
 
-		 _misMidHintText = format ["<t align='center' size='2.2'>Attention!</t><br/><t size='1.5' align='center' color='#FFCF11'></t><br/>____________________<br/>OPFOR Forces are nearing the crash site, take them out before destroying the UAV<br/><br/>",_missionName];
-	  	["Globalhint_EH", [_misMidHintText]] call ace_common_fnc_globalEvent;
+         _misMidHintText = format ["<t align='center' size='2.2'>Attention!</t><br/><t size='1.5' align='center' color='#FFCF11'></t><br/>____________________<br/>OPFOR Forces are nearing the crash site, take them out before destroying the UAV<br/><br/>",_missionName];
+         ["Globalhint_EH", [_misMidHintText]] call ace_common_fnc_globalEvent;
 
-	  	_rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-	  	_GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-	  	[_GRP1,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
+         _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+         _GRP1 = [_rndPos, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+         [_GRP1,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
 
-	  	_rndPos2 =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-	  	_GRP2 = [_rndPos2, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-	  	[_GRP2,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
+         _rndPos2 =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+         _GRP2 = [_rndPos2, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+         [_GRP2,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
 
-	  	_rndPos3  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-	  	_GRP3 = [_rndPos3, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
-	  	[_GRP3,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
+         _rndPos3  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+         _GRP3 = [_rndPos3, EAST, (configfile >> "CfgGroups" >> "East" >> "rhs_faction_vdv" >> "rhs_group_rus_vdv_btr60" >> "rhs_group_rus_vdv_btr60_squad_2mg" )] call BIS_fnc_spawnGroup;
+         [_GRP3,(getPosWorld mission9Objective)] call BIS_fnc_taskAttack;
 
-	  	[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+         [_this select 1] call CBA_fnc_removePerFrameHandler;
+     };
 };
 [_missionNextPhasePFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
 _missionPFH = {
     if ((!isNil "mission9Objective") && {!alive mission9Objective}) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+        (_this select 0) params ["_missionName","_selectedLocation"];
 
         _misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
         ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -109,7 +109,7 @@ _missionPFH = {
         mission9Completed = true;
         publicVariable "mission9Completed";
 
-    	[_this select 1] call CBA_fnc_removePerFrameHandler;
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
     };
 };
 [_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

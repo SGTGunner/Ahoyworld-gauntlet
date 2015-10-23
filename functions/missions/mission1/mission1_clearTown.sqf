@@ -80,7 +80,7 @@ _missionPFH = {
 		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
 		mission1Completed = true;
-        publicVariable "mission1Completed";
+		publicVariable "mission1Completed";
 
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	};

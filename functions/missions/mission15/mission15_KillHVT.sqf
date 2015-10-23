@@ -40,10 +40,6 @@ mission15Objective = ((units _hvtGrp) select 0);
 //------------------- Defence
 _DACvalues = ["m15",[11,0,0],[6,4,20,5],[],[2,1,10,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;
-rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-rndPos1  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-rndPos2  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
-rndPos3  =  [getMarkerPos _selectedLocation, 3000] call CBA_fnc_randPos;
 
 //------------------- Markers
 _marker = createMarker ["mission15_mrk", getMarkerPos _selectedLocation ];
@@ -64,18 +60,10 @@ _marker3 = createMarker ["mission15_2_mrk", getMarkerPos "AOMarker"];
 "mission15_2_mrk" setMarkerText "An Enemy officer has been spotted. Take Him Out.";
 
 //------------------- Triggers
-QRFTarget = getMarkerPos _selectedLocation;
-nextPhaseTrigger = createTrigger ["EmptyDetector",QRFTarget];
+nextPhaseTrigger = createTrigger ["EmptyDetector",getMarkerPos _selectedLocation,false];
 nextPhaseTrigger setTriggerArea [400,400,0,false];
 nextPhaseTrigger setTriggerActivation ["West","East D", false];
-nextPhaseTrigger setTriggerStatements ["this","GRP1 = [rndPos, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
-[GRP1,QRFTarget] call BIS_fnc_taskAttack;
-GRP2 = [rndPos2, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
-[GRP2,QRFTarget] call BIS_fnc_taskAttack;
-GRP3 = [rndPos1, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
-[GRP3,QRFTarget] call BIS_fnc_taskAttack;_heliGrp = createGroup east;
-ambientHeli = createVehicle ['RHS_Mi8AMTSh_UPK23_vvsc', rndPos3, [], 0, 'FLY' ];
-[ambientHeli,_heliGrp] call BIS_fnc_spawnCrew; [heliGrp,QRFTarget] call BIS_fnc_taskAttack;QRFCalled = true;",""];
+nextPhaseTrigger setTriggerStatements ["this","QRFCalled = true;",""];
 
 //------------------- Mission hint
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>An enemy Officer has been spotted. Kill him but be aware. If the enemy find you they will call in their QRF.<br/><br/>",_missionName];
@@ -83,54 +71,66 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 //------------------- PFHs
 _qrfPFH = {
-	if ((!isNil "QRFCalled") && {QRFCalled}) then {
-		(_this select 0) params ["_missionName",""];
+    if ((!isNil "QRFCalled") && {QRFCalled}) then {
+        (_this select 0) params ["_missionName",""];
 
-		_misEndText = format ["<t align='center' size='2.2'>Attention</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>The enemy QRF has been alerted. Hurry up with the mission.</t>",_missionName];
-		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+        _misEndText = format ["<t align='center' size='2.2'>Attention</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>The enemy QRF has been alerted. Hurry up with the mission.</t>",_missionName];
+        ["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		QRFTarget = nil;
-		nextPhaseTrigger = nil;
-		QRFCalled = nil;
-		rndPos = nil;
-		rndPos1 = nil;
-		rndPos2 = nil;
-		rndPos3 = nil;
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP1 = [_rndPos, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
+        [GRP1,(getMarkerPos _selectedLocation)] call BIS_fnc_taskAttack;
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP2 = [_rndPos, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
+        [GRP2,(getMarkerPos _selectedLocation)] call BIS_fnc_taskAttack;
+
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        GRP3 = [_rndPos, EAST, (configfile >> 'CfgGroups' >> 'East' >> 'rhs_faction_vdv' >> 'rhs_group_rus_vdv_btr60' >> 'rhs_group_rus_vdv_btr60_squad_2mg' )] call BIS_fnc_spawnGroup;
+        [GRP3,(getMarkerPos _selectedLocation)] call BIS_fnc_taskAttack;_heliGrp = createGroup east;
+
+        _rndPos  =  [getMarkerPos _selectedLocation, 1000] call CBA_fnc_randPos;
+        ambientHeli = createVehicle ['RHS_Mi8AMTSh_UPK23_vvsc', _rndPos, [], 0, 'FLY' ];
+        [ambientHeli,_heliGrp] call BIS_fnc_spawnCrew; [heliGrp,QRFTarget] call BIS_fnc_taskAttack
+
+        nextPhaseTrigger = nil;
+        QRFCalled = nil;
+
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
-[_qrfPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+mission15_PFHhandle = [_qrfPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
 _missionPFH = {
-	if (!alive mission15Objective) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+    if (!alive mission15Objective) then {
+        (_this select 0) params ["_missionName","_selectedLocation"];
 
-		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1. Now get out of the area and new tasking will be assigned</t>",_missionName];
-		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+        _misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1. Now get out of the area and new tasking will be assigned</t>",_missionName];
+        ["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission15_mrk";
-		deleteMarker "mission15_1_mrk";
-		deleteMarker "mission15_2_mrk";
-		deleteVehicle nextPhaseTrigger;
+        deleteMarker "mission15_mrk";
+        deleteMarker "mission15_1_mrk";
+        deleteMarker "mission15_2_mrk";
+        deleteVehicle nextPhaseTrigger;
 
-		mission15Objective = nil;
-		GRP1 = nil;
-		GRP2 = nil;
-		GRP3 = nil;
-		ambientHeli = nil;
+        mission15Objective = nil;
+        GRP1 = nil;
+        GRP2 = nil;
+        GRP3 = nil;
+        ambientHeli = nil;
 
         [{
             mission15Objective = nil;
         },[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m15"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
-		[_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [{["m15"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+        [_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission15Completed = true;
         publicVariable "mission15Completed";
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        [mission15_PFHhandle] call CBA_fnc_removePerFrameHandler;
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
 [_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;

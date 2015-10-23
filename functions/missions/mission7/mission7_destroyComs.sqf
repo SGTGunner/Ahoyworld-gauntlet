@@ -59,26 +59,26 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 //----------------- mission PFH
 _missionPFH = {
-	if ((!isNil "mission7Objective") && {!alive mission7Objective}) then {
-		(_this select 0) params ["_missionName","_roughPos"];
+    if ((!isNil "mission7Objective") && {!alive mission7Objective}) then {
+        (_this select 0) params ["_missionName","_roughPos"];
 
-		_misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with that mission. Further tasking will occur shortly</t>",_missionName];
-		["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
+        _misEndText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with that mission. Further tasking will occur shortly</t>",_missionName];
+        ["Globalhint_EH", [_misEndText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission7_mrk";
-		deleteMarker "mission7_1_mrk";
-		deleteMarker "mission7_2_mrk";
+        deleteMarker "mission7_mrk";
+        deleteMarker "mission7_1_mrk";
+        deleteMarker "mission7_2_mrk";
 
-		[{deleteVehicle mission7Objective;mission7Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
+        [{deleteVehicle mission7Objective;mission7Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m7"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+        [{["m7"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_roughPos,"ELLIPSE",[400,400]] call AW_fnc_mission7Transition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_roughPos,"ELLIPSE",[400,400]] call AW_fnc_mission7Transition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission7Completed = true;
         publicVariable "mission7Completed";
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
 [_missionPFH,10,[_missionName,_roughPos]] call CBA_fnc_addPerFrameHandler;

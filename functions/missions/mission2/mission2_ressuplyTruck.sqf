@@ -63,55 +63,54 @@ _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5
 
 //------------------- PFH checking every 10s if the mission has been completed
 _missionPFH = {
-	if ((!isNil "missionWin") && {missionWin}) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+    (_this select 0) params ["_missionName","_selectedLocation"];
+    if ((!isNil "missionWin") && {missionWin}) then {
 
-		_misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
-		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
+        _misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, get ready for new tasking</t>",_missionName];
+        ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission2_mrk";
-		deleteMarker "mission2_1_mrk";
-		deleteMarker "mission2_2_mrk";
+        deleteMarker "mission2_mrk";
+        deleteMarker "mission2_1_mrk";
+        deleteMarker "mission2_2_mrk";
 
-		missionWin = nil;
-		[{deleteVehicle mission2Objective;mission2Objective = nil;},[], 300] call ace_common_fnc_waitAndExecute;
+        missionWin = nil;
+        [{deleteVehicle mission2Objective;mission2Objective = nil;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+        [{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation,"RECTANGLE",[30,30]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_selectedLocation,"RECTANGLE",[30,30]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission2Completed = true;
         publicVariable "mission2Completed";
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
-	if (!alive mission2Objective) then {
-		(_this select 0) params ["_missionName","_selectedLocation"];
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
+    if (!alive mission2Objective) then {
 
-		_misFAILText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1, get ready for new tasking</t>",_missionName];
-		["Globalhint_EH", [_misFAILText]] call ace_common_fnc_globalEvent;
+        _misFAILText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>Tough luck with %1, get ready for new tasking</t>",_missionName];
+        ["Globalhint_EH", [_misFAILText]] call ace_common_fnc_globalEvent;
 
-		deleteMarker "mission2_mrk";
-		deleteMarker "mission2_1_mrk";
-		deleteMarker "mission2_2_mrk";
-		deleteVehicle winTrigger;
+        deleteMarker "mission2_mrk";
+        deleteMarker "mission2_1_mrk";
+        deleteMarker "mission2_2_mrk";
+        deleteVehicle winTrigger;
 
-		winTrigger = nil;
-		missionWin = nil;
+        winTrigger = nil;
+        missionWin = nil;
 
-		[{
+        [{
             deleteVehicle mission2Objective;
             mission2Objective = nil;
         },[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+        [{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation,"RECTANGLE",[30,30]] call AW_fnc_missionTransition;
-		gauntlet_missionCounter = gauntlet_missionCounter + 1;
+        [_selectedLocation,"RECTANGLE",[30,30]] call AW_fnc_missionTransition;
+        gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission2Completed = true;
         publicVariable "mission2Completed";
 
-		[_this select 1] call CBA_fnc_removePerFrameHandler;
-	};
+        [_this select 1] call CBA_fnc_removePerFrameHandler;
+    };
 };
 [_missionPFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
