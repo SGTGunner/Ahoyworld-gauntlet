@@ -18,7 +18,8 @@
  * Win: Meeting timer ends with both parties alive
  * Fail: Nobody in the platoon leader slot / Platoon leader or guerilla leader died
  */
-params ["_missionCounter"];
+ missionInProgress = true;
+publicVariable "missionInProgress";
 
 if (isNil "s3") then {
 	_misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A local Guerrilla Leader has requested a meeting with the platoon commander, we currently don't have any mission aborted.<br/><br/>",_missionName];
@@ -75,7 +76,7 @@ if (isNil "s3") then {
 	//------------------- PFHs
 	_missionNextPhasePFH = {
 		if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
-			(_this select 0) params ["_missionCounter","_missionName","_selectedLocation"];
+			(_this select 0) params ["_missionName","_selectedLocation"];
 
 			_misHintText = format ["<t align='center' size='2.2'></t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/><br/>Contact established with the guerrilla cell leader, OPFOR are on the move.<br/><br/>",_missionName];
 			["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
@@ -89,7 +90,7 @@ if (isNil "s3") then {
 			[_this select 1] call CBA_fnc_removePerFrameHandler;
 		};
 	};
-	_mission10_PFH_1 = [_missionNextPhasePFH,10,[_missionCounter,_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
+	_mission10_PFH_1 = [_missionNextPhasePFH,10,[_missionName,_selectedLocation]] call CBA_fnc_addPerFrameHandler;
 
 	_missionPFH = {
 		if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
@@ -100,7 +101,7 @@ if (isNil "s3") then {
 			};
 		};
 		if ((!isNil "meetingTime") && {meetingTime >= 600}) then {
-			(_this select 0) params ["_missionCounter","_missionName","_selectedLocation","_mission10_PFH_1","_mission10_PFH_2"];
+			(_this select 0) params ["_missionName","_selectedLocation","_mission10_PFH_1"];
 
 			_misSUCText = format ["<t align='center' size='2.2'>OP Complete</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Good job with %1, The meeting is complete</t>",_missionName];
 			["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -131,13 +132,16 @@ if (isNil "s3") then {
 			[{["m10"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 			[{["m10_1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-			[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
+			[_selectedLocation,"RECTANGLE",[200,200]] call AW_fnc_missionTransition;
+			gauntlet_missionCounter = gauntlet_missionCounter + 1;
+            mission10Completed = true;
+            publicVariable "mission10Completed";
 
 			[_this select 1] call CBA_fnc_removePerFrameHandler;
 			_mission10_PFH_2 call CBA_fnc_removePerFrameHandler;
 		};
 		if ((!alive s3) || (!alive mission10Objective)) then {
-			(_this select 0) params ["_missionCounter","_missionName","_selectedLocation","_mission10_PFH_1","_mission10_PFH_2"];
+			(_this select 0) params ["_missionName","_selectedLocation","_mission10_PFH_1"];
 
 			_misFAILText = format ["<t align='center' size='2.2'>OP FAILED</t><br/><t size='1.5' align='center' color='#ff0000'>%1</t><br/>____________________<br/><t align='left'>The platoon commander or guerrilla cell leader has died. %1 Failed</t>",_missionName];
 			["Globalhint_EH", [_misFAILText]] call ace_common_fnc_globalEvent;
@@ -160,11 +164,14 @@ if (isNil "s3") then {
 				nextPhaseTrigger = nil;
 			};
 
-			[(_missionCounter+1),_selectedLocation] call AW_fnc_missionTransition;
+			[_selectedLocation,"RECTANGLE",[200,200]] call AW_fnc_missionTransition;
+			gauntlet_missionCounter = gauntlet_missionCounter + 1;
+            mission10Completed = true;
+            publicVariable "mission10Completed";
 
 			_mission10_PFH_1 call CBA_fnc_removePerFrameHandler;
 			[_this select 1] call CBA_fnc_removePerFrameHandler;
 		};
 	};
-	[_missionPFH,10,[_missionCounter,_missionName,_selectedLocation,_mission10_PFH_1]] call CBA_fnc_addPerFrameHandler;
+	[_missionPFH,10,[_missionName,_selectedLocation,_mission10_PFH_1]] call CBA_fnc_addPerFrameHandler;
 };

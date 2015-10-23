@@ -699,8 +699,6 @@ if (_filter) then {
     "TRYK_V_tacSVD_BK",
     "TRYK_V_tacSVD_OD"],true] call BIS_fnc_addVirtualItemCargo;
 
-}
-else
-{
+} else {
     [_box,[true],true] call BIS_fnc_removeVirtualItemCargo;
 };

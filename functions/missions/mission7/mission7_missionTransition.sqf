@@ -12,12 +12,12 @@
  */
 params ["_previousLocation","_markerShape","_markerSize"];
 
-_bluforCheck = createTrigger ["EmptyDetector",getMarkerPos _previousLocation,false];
+_bluforCheck = createTrigger ["EmptyDetector",_previousLocation,false];
 _bluforCheck setTriggerArea [400,400,0,false];
 _bluforCheck setTriggerActivation ["WEST","NOT PRESENT",false];
 _bluforCheck setTriggerStatements ["this","westNotPresent = true;",""];
 
-_markerTransition1 = createMarker ["missionTransition1_mrk",(getMarkerPos _previousLocation)];
+_markerTransition1 = createMarker ["missionTransition1_mrk",(_previousLocation)];
 "missionTransition1_mrk" setMarkerShape _markerShape;
 "missionTransition1_mrk" setMarkerSize _markerSize;
 "missionTransition1_mrk" setMarkerBrush "Border";
