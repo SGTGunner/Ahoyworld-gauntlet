@@ -159,8 +159,8 @@ class Mission
 	randomSeed=2579337;
 	class Intel
 	{
-		briefingName="COx Gauntlet V0.33";
-		overviewText="Gauntlet Zargabad Version 0.33";
+		briefingName="COx Gauntlet V0.33A";
+		overviewText="Gauntlet Zargabad Version 0.33A";
 		startWeather=0;
 		startWind=0.099999994;
 		startWaves=0.099999994;
