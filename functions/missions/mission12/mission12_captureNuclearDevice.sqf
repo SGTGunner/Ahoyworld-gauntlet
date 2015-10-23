@@ -103,7 +103,7 @@ _missionPFH = {
 
 		[{["m12"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission12Completed = true;
         publicVariable "mission12Completed";
@@ -124,7 +124,7 @@ _missionPFH = {
 		winTrigger = nil;
 		missionWin = nil;
 
-		_missionClearing = {
+		[{
 			deleteVehicle mission12Object1;
 			deleteVehicle mission12Object2;
 			deleteVehicle mission12Object3;
@@ -135,12 +135,11 @@ _missionPFH = {
 			mission12Object2 = nil;
 			mission12Object3 = nil;
 			mission12Object4 = nil;
-		};
-		[_missionClearing,[], 60] call ace_common_fnc_waitAndExecute;
+		},[], 60] call ace_common_fnc_waitAndExecute;
 
 		[{["m12"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission12Completed = true;
         publicVariable "mission12Completed";

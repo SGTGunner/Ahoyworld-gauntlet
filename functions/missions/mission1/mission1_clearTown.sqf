@@ -75,9 +75,9 @@ _missionPFH = {
 		deleteMarker "mission1_2_mrk";
 		missionWin = nil;
 
-		[{["m1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+		[{["m1"] call DAC_fDeleteZone;},[], 5] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
 		mission1Completed = true;
         publicVariable "mission1Completed";

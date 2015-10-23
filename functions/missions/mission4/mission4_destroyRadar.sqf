@@ -79,7 +79,7 @@ _missionPFH = {
 
 		[{["m4"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission4Completed = true;
         publicVariable "mission4Completed";

@@ -41,7 +41,7 @@ _marker = createMarker ["mission2_mrk", getMarkerPos _selectedLocation ];
 "mission2_mrk" setMarkerColor "ColorBLUFOR";
 "mission2_mrk" setMarkerText "Objective";
 
-_marker2 = createMarker ["mission2_1", getMarkerPos _selectedLocation];
+_marker2 = createMarker ["mission2_1_mrk", getMarkerPos _selectedLocation];
 "mission2_1_mrk" setMarkerShape "RECTANGLE";
 "mission2_1_mrk" setMarkerSize [30,30];
 "mission2_1_mrk" setMarkerBrush "Border";
@@ -78,7 +78,7 @@ _missionPFH = {
 
 		[{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"RECTANGLE",[30,30]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission2Completed = true;
         publicVariable "mission2Completed";
@@ -98,11 +98,15 @@ _missionPFH = {
 
 		winTrigger = nil;
 		missionWin = nil;
-		[{mission2Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
 
-		[{["m2"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
+		[{
+            deleteVehicle mission2Objective;
+            mission2Objective = nil;
+        },[], 60] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[{["m2"] call DAC_fDeleteZone;},[], 60] call ace_common_fnc_waitAndExecute;
+
+		[_selectedLocation,"RECTANGLE",[30,30]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission2Completed = true;
         publicVariable "mission2Completed";

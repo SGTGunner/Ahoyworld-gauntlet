@@ -70,11 +70,14 @@ _missionPFH = {
 		deleteMarker "mission14_1_mrk";
 		deleteMarker "mission14_2_mrk";
 
-		[{deleteVehicle mission14Objective;mission14Objective = nil;},[], 60] call ace_common_fnc_waitAndExecute;
+		[{
+            deleteVehicle mission14Objective;
+            mission14Objective = nil;
+        },[], 60] call ace_common_fnc_waitAndExecute;
 
 		[{["m14"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"ELLIPSE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission14Completed = true;
         publicVariable "mission14Completed";

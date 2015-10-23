@@ -132,7 +132,7 @@ if (isNil "s3") then {
 			[{["m10"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 			[{["m10_1"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-			[_selectedLocation] call AW_fnc_missionTransition;
+			[_selectedLocation,"RECTANGLE",[200,200]] call AW_fnc_missionTransition;
 			gauntlet_missionCounter = gauntlet_missionCounter + 1;
             mission10Completed = true;
             publicVariable "mission10Completed";
@@ -164,7 +164,7 @@ if (isNil "s3") then {
 				nextPhaseTrigger = nil;
 			};
 
-			[_selectedLocation] call AW_fnc_missionTransition;
+			[_selectedLocation,"RECTANGLE",[200,200]] call AW_fnc_missionTransition;
 			gauntlet_missionCounter = gauntlet_missionCounter + 1;
             mission10Completed = true;
             publicVariable "mission10Completed";

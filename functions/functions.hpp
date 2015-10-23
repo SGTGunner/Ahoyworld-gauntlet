@@ -2,29 +2,8 @@ class AW {
     tag = "AW";
     class functions {
         //Main
-        class missionName {file = "functions\core\missionName.sqf";};
-        class missionSelection {file = "functions\core\missionSelection.sqf";};
-        class missionTransition {file = "functions\core\missionTransition.sqf";};
-        class respawnTime_EH {file = "functions\core\respawnTime_EH.sqf";};
         class missionSelection_interactions {file = "functions\core\missionSelection_interactions.sqf";};
         class manualMissionSelection_check {file = "functions\core\manualMissionSelection_check.sqf";};
-
-        //Missions
-        class mission_clearTown {file = "functions\missions\mission1_clearTown.sqf";};
-        class mission_ressuplyTruck {file = "functions\missions\mission2_ressuplyTruck.sqf";};
-        class mission_AAVehicleDeal {file = "functions\missions\mission3_AAVehicleDeal.sqf";};
-        class mission_destroyRadar {file = "functions\missions\mission4_destroyRadar.sqf";};
-        class mission_deployComs {file = "functions\missions\mission6_deployComs.sqf";};
-        class mission_destroyComs {file = "functions\missions\mission7_destroyComs.sqf";};
-        class mission_recoverCrate {file = "functions\missions\mission8_recoverCrate.sqf";};
-        class mission_destroyUAV {file = "functions\missions\mission9_destroyUAV.sqf";};
-        class mission_guerMeeting {file = "functions\missions\mission10_guerMeeting.sqf";};
-        class mission_tankPlatoon {file = "functions\missions\mission11_tankPlatoon.sqf";};
-        class mission_captureNuclearDevice {file = "functions\missions\mission12_captureNuclearDevice.sqf";};
-        class mission_captureAndDefendTown {file = "functions\missions\mission13_captureAndDefendTown.sqf";};
-        class mission_destroyMortar {file = "functions\missions\mission14_destroyMortar.sqf";};
-        class mission_KillHVT {file = "functions\missions\mission15_KillHVT.sqf";};
-        class mission_recoverChopperIntel {file = "functions\missions\mission16_recoverChopperIntel.sqf";};
 
         //Loadouts
         class loadoutsExec {file = "functions\loadouts\loadoutexec.sqf";};

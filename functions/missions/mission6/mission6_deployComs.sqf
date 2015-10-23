@@ -102,20 +102,23 @@ _missionPFH = {
 		deleteMarker "mission6_mrk";
 		deleteMarker "mission6_1_mrk";
 		deleteMarker "mission6_2_mrk";
-		deleteVehicle mission6Objective;
 		deleteVehicle nextPhaseTrigger;
 
 		missionNextPhase = nil;
 		missionWin = nil;
-		mission6Objective = nil;
 		nextPhaseTrigger = nil;
 		GRP1 = nil;
 		GRP2 = nil;
 		GRP3 = nil;
 
+        [{
+            deleteVehicle mission6Objective;
+            mission6Objective = nil;
+        },[], 60] call ace_common_fnc_waitAndExecute;
+
 		[{["m6"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"RECTANGLE",[50,50]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission6Completed = true;
         publicVariable "mission6Completed";
@@ -131,18 +134,20 @@ _missionPFH = {
 		deleteMarker "mission6_mrk";
 		deleteMarker "mission6_1_mrk";
 		deleteMarker "mission6_2_mrk";
-		deleteVehicle mission6Objective;
 
-
+        GRP1 = nil;
+        GRP2 = nil;
+        GRP3 = nil;
 		missionWin = nil;
-		mission6Objective = nil;
-		GRP1 = nil;
-		GRP2 = nil;
-		GRP3 = nil;
+
+        [{
+            deleteVehicle mission6Objective;
+            mission6Objective = nil;
+        },[], 60] call ace_common_fnc_waitAndExecute;
 
 		[{["m6"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[_selectedLocation,"RECTANGLE",[50,50]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission6Completed = true;
         publicVariable "mission6Completed";

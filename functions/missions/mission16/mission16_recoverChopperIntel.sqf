@@ -148,16 +148,17 @@ _missionPFH = {
 		enemyReinforcements = nil;
         rndPos = nil;
 
-		_missionCLearing = {
-			mission16Objective = nil;
-			GRP1 = nil;
-			GRP2 = nil;
-			GRP3 = nil;
-			GRP4 = nil;
-		};
-		[_missionCLearing,[], 300] call ace_common_fnc_waitAndExecute;
+        GRP1 = nil;
+        GRP2 = nil;
+        GRP3 = nil;
+        GRP4 = nil;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+        [{
+            deleteVehicle mission16Objective;
+            mission16Objective = nil;
+        },[], 60] call ace_common_fnc_waitAndExecute;
+
+		[_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission16Completed = true;
         publicVariable "mission16Completed";
@@ -180,16 +181,17 @@ _missionPFH = {
         rndPos = nil;
 		enemyReinforcements = nil;
 
-		_missionClearing = {
-			mission16Objective = nil;
-			GRP1 = nil;
-			GRP2 = nil;
-			GRP3 = nil;
-			GRP4 = nil;
-		};
-		[_missionClearing,[], 300] call ace_common_fnc_waitAndExecute;
+        GRP1 = nil;
+        GRP2 = nil;
+        GRP3 = nil;
+        GRP4 = nil;
 
-		[_selectedLocation] call AW_fnc_missionTransition;
+		[{
+            deleteVehicle mission16Objective;
+			mission16Objective = nil;
+		},[], 60] call ace_common_fnc_waitAndExecute;
+
+		[_selectedLocation,"RECTANGLE",[400,400]] call AW_fnc_missionTransition;
 		gauntlet_missionCounter = gauntlet_missionCounter + 1;
         mission16Completed = true;
         publicVariable "mission16Completed";

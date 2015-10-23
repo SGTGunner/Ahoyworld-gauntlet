@@ -1,3 +1,9 @@
+// -------------- Functions compiling
+call compile preprocessFileLineNumbers "functions\core\serverSide_functions_compile.sqf";
+
+// -------------- Mission vars
+gauntlet_missionCounter = 0;
+
 // -------------- Headless Client
 [] spawn {
     mytag_headlessClient_server_listener = TRUE; publicVariable 'mytag_headlessClient_server_listener';
