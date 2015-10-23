@@ -61,10 +61,14 @@ nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;enemyRein
 _misHintText = format ["<t align='center' size='2.2'>New Op</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>A helicopter carrying important information has been shot down. Get out there and recover the data.<br/><br/>",_missionName];
 ["Globalhint_EH", [_misHintText]] call ace_common_fnc_globalEvent;
 
+//------------------- Mission timer 5minutes + random 5 minutes
+_missionTimer = 300 + (random 300);
+
 //------------------- PFH checking every 10s if the mission has been completed
 _timerPFH = {
+    (_this select 0) params ["_missionName","_missionTimer"];
+
 	if ((!isNil "missionNextPhase") && {!(missionNextPhase)}) then {
-		(_this select 0) params ["_missionName"];
 
 		_misSUCText = format ['OP Update<br/><br/>____________________<br/>Uplink with the helicopter has been lost. Restart the download.',_missionName];
 		['Globalhint_EH', [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -77,7 +81,6 @@ _timerPFH = {
 		nextPhaseTrigger setTriggerStatements ["this","missionNextPhase = true;",""];
 	};
 	if ((!isNil "missionNextPhase") && {missionNextPhase}) then {
-		(_this select 0) params ["_missionName"];
 
 		_misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel download has begun. Dig in and prepare for an attack.</t>",_missionName];
 		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -92,10 +95,14 @@ _timerPFH = {
 		missionTimer = 0;
 	};
 	if (!isNil "missionTimer") then {
-		missionTimer = missionTimer + 10;
+        missionTimer = missionTimer + 10;
+
+        if (missionTimer >= 30) then {
+            _misSUCText = format ["Download progression: %1",((missionTimer / _missionTimer) * 100)];
+            ["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
+        };
 	};
-	if ((!isNil "missionTimer") && {missionTimer >= (300 + (random 300))}) then {
-		(_this select 0) params ["_missionName",""];
+	if ((!isNil "missionTimer") && {missionTimer >= _missionTimer}) then {
 
 		_misSUCText = format ["<t align='center' size='2.2'>OP Update</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Intel is secured. Now destroy the helicopter and extract.</t>",_missionName];
 		["Globalhint_EH", [_misSUCText]] call ace_common_fnc_globalEvent;
@@ -104,7 +111,7 @@ _timerPFH = {
 		[_this select 1] call CBA_fnc_removePerFrameHandler;
 	}
 };
-timerPFHhandle = [_timerPFH,10,[_missionName]] call CBA_fnc_addPerFrameHandler;
+timerPFHhandle = [_timerPFH,10,[_missionName,_missionTimer]] call CBA_fnc_addPerFrameHandler;
 
 _reinforcementsPFH = {
     if ((!isNil "enemyReinforcements") && {!(enemyReinforcements)}) then {
