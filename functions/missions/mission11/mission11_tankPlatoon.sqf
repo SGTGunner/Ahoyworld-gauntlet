@@ -105,7 +105,7 @@ _missionPFH = {
             mission11Object2 = nil;
             mission11Object3 = nil;
             mission11Object4 = nil;
-        };,[], 60] call ace_common_fnc_waitAndExecute;
+        },[], 60] call ace_common_fnc_waitAndExecute;
 
         [{["m11"] call DAC_fDeleteZone;},[], 300] call ace_common_fnc_waitAndExecute;
 
