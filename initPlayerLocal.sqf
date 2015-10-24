@@ -23,6 +23,7 @@ if (!hasInterface) then {
     // ACE3 interactions
     [true,"rhsusf_M1083A1P2_B_M2_d_MHQ_fmtv_usarmy"] call AW_fnc_FOB_interactions_add; // Interactions for the FOB
     [true,ammoCargo] call AW_fnc_supplyPoint_interactions_add; // Interactions for the AmmoPole
+    [player] call compile preprocessFileLineNumbers "functions\misc\walkingFix_interactions_add.sqf";
 
     if (vehicle player == s3) then {
         [missionSelectionLaptop] call AW_fnc_missionSelection_interactions; // Manual mission selection interactions for the PL
