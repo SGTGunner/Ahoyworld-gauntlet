@@ -33,6 +33,8 @@ rndPos = [getMarkerPos _selectedLocation, 100] call CBA_fnc_randPos;
 mission9Objective = "B_UAV_02_F" createVehicle rndPos;
 mission9Objective setDamage .9;
 
+{_x addCuratorEditableObjects [[mission9Objective],false];} count allCurators;
+
 //------------------- markers
 _marker = createMarker ["mission9_mrk", getMarkerPos _selectedLocation ];
 "mission9_mrk" setMarkerShape "ICON";

@@ -32,6 +32,8 @@ _missionName = [] call AW_fnc_missionName;
 //------------------- Spawn In Container
 mission6Objective = createVehicle ["B_Slingload_01_Repair_F", _pickUp, [], 0, "NONE" ];
 
+{_x addCuratorEditableObjects [[mission6Objective],false];} count allCurators;
+
 //------------------- Populate deploy zone with enemies
 _DACvalues = ["m6",[2,0,0],[6,4,20,5],[],[],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;

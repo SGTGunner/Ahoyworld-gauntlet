@@ -37,6 +37,8 @@ _hvtGrp = createGroup east;
 "rhs_vdv_LAT" createUnit [_meetingLocation, _hvtGrp];
 mission15Objective = ((units _hvtGrp) select 0);
 
+{_x addCuratorEditableObjects [[mission15Objective],false];} count allCurators;
+
 //------------------- Defence
 _DACvalues = ["m15",[11,0,0],[6,4,20,5],[],[2,1,10,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;

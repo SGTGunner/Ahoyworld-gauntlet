@@ -33,6 +33,7 @@ _DACvalues = ["m2",[2,0,0],[4,2,20,5],[],[1,2,20,5],[],[0,0,0,0]];
 //------------------- Spawn Truck in
 _spawnLoc = getMarkerPos "spawn_zone";
 mission2Objective = createVehicle ["RHS_Ural_Civ_03", _spawnLoc, [], 0, "NONE" ];
+{_x addCuratorEditableObjects [[mission2Objective],false];} count allCurators;
 
 //------------------- Markers AO
 _marker = createMarker ["mission2_mrk", getMarkerPos _selectedLocation ];

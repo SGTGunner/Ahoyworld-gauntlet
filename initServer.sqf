@@ -29,3 +29,5 @@ execVM "scripts\core\houseFilling.sqf";		// Fill house, needs REVIEW
 
 //---------------------------------- EHs
 ["zeusAddUnitEH",AW_fnc_zeusAddUnit_EH] call ace_common_fnc_addEventHandler;
+
+{_x addCuratorEditableObjects [[kBox],false];} count allCurators;

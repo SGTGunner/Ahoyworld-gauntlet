@@ -28,6 +28,8 @@ _roughPos =[((_flatPos select 0) - 200) + (random 400),((_flatPos select 1) - 20
 mission7Objective = "Land_TTowerBig_2_F" createVehicle _flatPos;
 mission7Objective setVectorUp [0,0,1];
 
+{_x addCuratorEditableObjects [[mission7Objective],false];} count allCurators;
+
 //------------------- Mission name
 _missionName = [] call AW_fnc_missionName;
 

@@ -36,6 +36,8 @@ mission8Objective = createVehicle ["B_supplyCrate_F", getMarkerPos _selectedLoca
 mission8Objective setVehicleLock "LOCKED";
 [mission8Objective,true,[0,2,0],0] call ace_dragging_fnc_setDraggable;
 
+{_x addCuratorEditableObjects [[mission8Objective],false];} count allCurators;
+
 //-------------------Markers
 _marker = createMarker ["mission8_mrk", getMarkerPos _selectedLocation ];
 "mission8_mrk" setMarkerShape "ICON";

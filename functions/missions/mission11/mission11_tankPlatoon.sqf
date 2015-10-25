@@ -47,6 +47,12 @@ mission11Objective1 setDir 205;
 mission11Objective2 setDir 20;
 mission11Objective3 setDir 30;
 
+{_x addCuratorEditableObjects [[mission11Objective1],false];} count allCurators;
+{_x addCuratorEditableObjects [[mission11Objective2],false];} count allCurators;
+{_x addCuratorEditableObjects [[mission11Objective3],false];} count allCurators;
+{_x addCuratorEditableObjects [[mission11Objective4],false];} count allCurators;
+{_x addCuratorEditableObjects [[mission11Objective5],false];} count allCurators;
+
 //------------------- Spawn In Enemies
 _DACvalues = ["m11",[13,0,0],[2,2,20,5],[],[5,2,35,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;

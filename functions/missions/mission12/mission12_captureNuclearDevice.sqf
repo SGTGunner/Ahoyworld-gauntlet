@@ -42,6 +42,7 @@ mission12Object4 setVehicleLock "LOCKED";
 mission12Object3 setDir 20;
 mission12Object4 setDir 30;
 
+{_x addCuratorEditableObjects [[mission12Objective],false];} count allCurators;
 //------------------- Spawn In Enemies
 _DACvalues = ["m12",[12,0,0],[6,3,20,5],[],[3,4,20,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;

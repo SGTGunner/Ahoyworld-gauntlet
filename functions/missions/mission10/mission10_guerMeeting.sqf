@@ -44,6 +44,8 @@ if (isNil "s3") then {
     mission10Objective = ((units _gurGrp) select 0);
     mission10ObjectiveGuard = ((units _gurGrp) select 1);
 
+    {_x addCuratorEditableObjects [[mission10Objective],false];} count allCurators;
+
     //------------------- DAC zone
     _DACvaluesWayPoint = ["m10",[10,0,0],[20],[20],[20],[],[0,0,0,0]];
     [getMarkerPos _selectedLocation,200,200,0,0,_DACvaluesWayPoint] call DAC_fNewZone;

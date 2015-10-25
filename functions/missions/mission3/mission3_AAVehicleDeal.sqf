@@ -36,6 +36,7 @@ local _opf_car_spwn = createVehicle ["rhs_tigr_vdv", _opf_car, [], 0, "NONE" ];
 local _opf_truck_spwn = createVehicle ["rhs_typhoon_vdv", _opf_truck, [], 0, "NONE" ];
 
 mission3Objective = createVehicle ["rhs_zsu234_aa", _selectedLocation, [], 0, "NONE" ];
+{_x addCuratorEditableObjects [[mission3Objective],false];} count allCurators;
 
 _ins_car_spwn setVehicleLock "LOCKED";
 _ins_truck_spwn setVehicleLock "LOCKED";

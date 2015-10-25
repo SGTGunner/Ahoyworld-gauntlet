@@ -32,6 +32,8 @@ mission14Objective = "B_rr_mortar_F" createVehicle _rndPos;
 mission14Objective setDamage .9;
 mission14Objective setVehicleAmmo 0;
 
+{_x addCuratorEditableObjects [[mission14Objective],false];} count allCurators;
+
 //------------------- Spawn In Enemies
 _DACvalues = ["m14",[4,0,0],[4,4,20,5],[],[3,4,20,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;

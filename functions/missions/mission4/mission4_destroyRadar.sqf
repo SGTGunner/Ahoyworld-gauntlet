@@ -31,6 +31,7 @@ mission4Objective = createVehicle ["rhs_p37",getMarkerPos _selectedLocation, [],
 local _obj_2 = createVehicle ["rhs_v2",getMarkerPos _selectedLocation, [], 20, "NONE" ];
 local _obj_3 = createVehicle ["rhs_v2",getMarkerPos _selectedLocation, [], 30, "NONE" ];
 
+{_x addCuratorEditableObjects [[mission4Objective],false];} count allCurators;
 //------------------- Spawn In Enemies
 _DACvalues = ["m4",[4,0,0],[4,4,20,5],[],[3,4,20,5],[],[0,0,0,0]];
 [getMarkerPos _selectedLocation,400,400,0,0,_DACvalues] call DAC_fNewZone;
