@@ -21,11 +21,9 @@ if (!hasInterface) then {
     ["zeusAddUnitEH", [(vehicle player)]] call ace_common_fnc_serverEvent; // Add the unit to all curators
 
     // ACE3 interactions
-    [true,"rhsusf_M1083A1P2_B_M2_d_MHQ_fmtv_usarmy"] call AW_fnc_FOB_interactions_add; // Interactions for the FOB
-    [true,ammoCargo] call AW_fnc_supplyPoint_interactions_add; // Interactions for the AmmoPole
-    [player] call compile preprocessFileLineNumbers "functions\misc\walkingFix_interactions_add.sqf";
+    [true,"rhsusf_M1083A1P2_B_M2_d_MHQ_fmtv_usarmy"]  call compile preprocessFileLineNumbers "functions\misc\FOB\FOB_interactions.sqf"; // Interactions for the FOB
+    [true,ammoCargo]  call compile preprocessFileLineNumbers "functions\misc\supplyPoint_interactions.sqf"; // Interactions for the AmmoPole
+    [player] call compile preprocessFileLineNumbers "functions\misc\walkingFix_interactions.sqf";
 
-    if (vehicle player == s3) then {
-        [missionSelectionLaptop] call AW_fnc_missionSelection_interactions; // Manual mission selection interactions for the PL
-    };
+    [missionSelectionLaptop]  call compile preprocessFileLineNumbers "functions\core\missionSelection_interactions.sqf"; // Manual mission selection interactions for the PL
 };

@@ -2,7 +2,6 @@ class AW {
     tag = "AW";
     class functions {
         //Main
-        class missionSelection_interactions {file = "functions\core\missionSelection_interactions.sqf";};
         class manualMissionSelection_check {file = "functions\core\manualMissionSelection_check.sqf";};
 
         //Loadouts
@@ -39,7 +38,6 @@ class AW {
         class FOB_handler {file = "functions\misc\FOB\FOB_handler.sqf";};
         class FOB_deploy_check {file = "functions\misc\FOB\FOB_deploy_check.sqf";};
         class FOB_repack_check {file = "functions\misc\FOB\FOB_repack_check.sqf";};
-        class FOB_interactions_add {file = "functions\misc\FOB\FOB_interactions_add.sqf";};
         class FOB_CanDeploy {file ="functions\misc\FOB\FOB_CanDeploy.sqf";};
         class FOB_CanRepack {file ="functions\misc\FOB\FOB_CanRepack.sqf";};
 
@@ -48,11 +46,11 @@ class AW {
         class daytime {file = "functions\misc\daytime.sqf";};
         class Globalhint_handler {file = "functions\misc\Globalhint_handler.sqf";};
         class find_flatPos {file = "functions\misc\find_flatPos.sqf";};
-        class supplyPoint_interactions_add {file = "functions\misc\supplyPoint_interactions_add.sqf";};
         class createBox {file = "functions\misc\createBox.sqf";};
         class supplyBox_refiller {file = "functions\misc\supplyBox_refiller.sqf";};
         class diary {file = "functions\misc\diary.sqf";};
         class zeusAddUnit_EH {file = "functions\misc\zeusAddUnit_EH.sqf";};
+        class findItemList {file = "functions\misc\findItemList.sqf";};
      };
 };
 class QS {
