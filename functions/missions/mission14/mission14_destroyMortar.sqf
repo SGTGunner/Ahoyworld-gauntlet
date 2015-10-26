@@ -49,7 +49,7 @@ _marker2 = createMarker ["mission14_1_mrk", getMarkerPos _selectedLocation];
 "mission14_1_mrk" setMarkerShape "ELLIPSE";
 "mission14_1_mrk" setMarkerSize [400,400];
 "mission14_1_mrk" setMarkerBrush "Border";
-"mission4_1_mrk" setMarkerColor "ColorOPFOR";
+"mission14_1_mrk" setMarkerColor "ColorOPFOR";
 
 _marker3 = createMarker ["mission14_2_mrk", getMarkerPos "AOMarker"];
 "mission14_2_mrk" setMarkerShape "ICON";
