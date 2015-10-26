@@ -3,7 +3,7 @@
  * Search for CfgWeapons and CfgGlasses entries with scope = 2
  *
  * Arguments:
- * 0: Search for weapons and items <BOOL>
+ * 0: turn on RHS UFRF filter <BOOL>
  *
  * Return Value:
  * Array of strings !!! WARNING VERY LONG ARRAYS !!! <ARRAY>
@@ -12,28 +12,30 @@
  *
  * copyToClipboard ([true] call AW_fnc_findItemList);
  */
-params ["_weaponsAndGlasses"];
+params ["_filter"];
 private ["_cfgArray","_returnArray"];
 _returnArray = [];
 
-if (_weaponsAndGlasses) then {
+if (_filter) then {
     _cfgArray = "(
     (getNumber (_x >> 'scope') >= 2) &&
-    {((configName _x) call ace_common_fnc_getConfigType) == 'CfgWeapons'}
+    {!((getText (_x >> 'dlc')) == 'RHS_AFRF')}
     )" configClasses (configFile >> "CfgWeapons");
     {_returnArray pushBack (configName _x)} forEach _cfgArray;
 
     _cfgArray = "(
-    (getNumber (_x >> 'scope') >= 2) &&
-    {((configName _x) call ace_common_fnc_getConfigType) == 'CfgGlasses'}
+    (getNumber (_x >> 'scope') >= 2)
     )" configClasses (configFile >> "CfgGlasses");
     {_returnArray pushBack (configName _x)} forEach _cfgArray;
 } else {
     _cfgArray = "(
-    (getNumber (_x >> 'scope') >= 2) &&
-    {((configName _x) call ace_common_fnc_getConfigType) == 'CfgVehicles'} &&
-    {901 in (getArray (_x >> 'allowedSlots'))}
-    )" configClasses (configFile >> "CfgVehicles");
+    (getNumber (_x >> 'scope') >= 2)
+    )" configClasses (configFile >> "CfgWeapons");
+    {_returnArray pushBack (configName _x)} forEach _cfgArray;
+
+    _cfgArray = "(
+    (getNumber (_x >> 'scope') >= 2)
+    )" configClasses (configFile >> "CfgGlasses");
     {_returnArray pushBack (configName _x)} forEach _cfgArray;
 };
 
