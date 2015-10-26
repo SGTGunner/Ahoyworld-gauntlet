@@ -20,3 +20,5 @@ clearWeaponCargoGlobal _supplyCrate;
 clearBackpackCargoGlobal _supplyCrate;
 
 [_supplyCrate,true,[0,2,0],0] call ace_dragging_fnc_setDraggable;
+
+["zeusAddUnitEH", [_supplyCrate]] call ace_common_fnc_serverEvent;
